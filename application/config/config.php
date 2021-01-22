@@ -28,6 +28,30 @@ $config['base_url'] = 'https://' . $_SERVER['SERVER_NAME'] . '/';
 $config['payment_url'] = 'https://spark.tarya.co.il:17373/spark/borrower_api.php';
 
 /*
+ Fully-Verified API client variables
+
+ fully_api_url - fv-customer-client public URL
+ fully_customer_name - customer's name (should be provided by Fully-Verified for demo purposes)
+ fully_customer_email - customer's email (should be provided by Fully-Verified for demo purposes)
+ fully_customer_password - customer's password (should be provided by Fully-Verified for demo purposes)
+ fully_customer_secret_key - customer's secret key (should be provided by Fully-Verified for demo purposes)
+ fully_verification_secret_key - customer's verification secret key (should be provided by Fully-Verified for demo purposes)
+ fully_customer_callback_url - URL where user should be redirected after the verification
+ fully_user_email - user's email - you will receive all notifications related to the verification process on this email address
+ fully_verified_url - URL for Sandbox Fully-Verified (`https://sandbox.fully-verified.com`)
+ */
+
+$config['fully_api_url'] = 'https://obli.co.il';
+$config['fully_customer_name'] = 'customer_10000200';
+$config['fully_customer_email'] = 'idanmalul@gmail.com';
+$config['fully_customer_password'] = 'M7868xzr';
+$config['fully_customer_secret_key'] = 'e5f891b443393ce9842d8ce868e3e78befb0c7a787730b1845c2526b762be159';
+$config['fully_verification_secret_key'] = '2e1f2cc1f0c7cfb62f6b1935aed57811fe3d2205754af8e5f62a4026a658d0ce';
+$config['fully_customer_callback_url'] = 'https://obli.co.il';
+$config['fully_user_email'] = 'zhulinskyi1990@gmail.com';
+$config['fully_verified_url'] = 'https://app.fully-verified.com';
+
+/*
 |--------------------------------------------------------------------------
 | Index File
 |--------------------------------------------------------------------------

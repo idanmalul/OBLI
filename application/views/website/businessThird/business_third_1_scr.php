@@ -376,6 +376,13 @@ function varify(flag){
 				   }
 						
 						$('.verfy_phone_box').html("<a onclick='varify(1)' style='font-size:12px; color:#add8e6; cursor:pointer;'>אמת את מספר הטלפון</a></span><label class='control-label gform_wrapper'></label>");
+						
+					if(flag != 1){
+						
+						$('.errorotp').html('מקוד חדש נשלח למספר הטלפון שהזנת');
+		  
+		                 $('.errorotp').css('color','red');
+						}
 				
 			   },1000);
 			   
@@ -406,6 +413,10 @@ function varify(flag){
                         $('#businessThird_1_form').prop('disabled', false);
 
                 }
+                
+                setTimeout(function(){
+                    $('#verificationModel').modal('hide');
+                },1000);
 				
 	  }else{
 		  $('.errorotp').html('קוד שגוי');

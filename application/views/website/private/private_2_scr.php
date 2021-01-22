@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
 <!-- calendar start -->
@@ -17,7 +17,7 @@
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdwp91cdIUVBbPw7tTubJYYP8sBLfjWbE&callback=initAutocomplete&libraries=places&v=weekly"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSi2-ZGTS48Xp3mQ2ca4P0a_Nk5QQ_r68&callback=initAutocomplete&libraries=places&v=weekly"
       defer
     ></script>
 
@@ -257,11 +257,13 @@
 <script>
   $( function() {
 
+var maxBirthdayDate = new Date();
+maxBirthdayDate.setFullYear( maxBirthdayDate.getFullYear() - 21,maxBirthdayDate.getMonth(),maxBirthdayDate.getDate());
 
     $( "#datepicker" ).datepicker({
       changeMonth: true,
       changeYear: true,
-      // yearRange: "-80:+0"
+      maxDate: maxBirthdayDate,
       yearRange: "1930:+0"
 
     });
@@ -591,9 +593,9 @@ function removeFile(){
             // $('#private_2_form').prop('disabled', false);
 
             // phone number validation
-            $("#client_phone").inputmask('9999-999-999');
+            $("#client_phone").inputmask('999-999-9999');
             $.validator.addMethod('customphone', function (value, element) {
-                return this.optional(element) || /^\d{4}-\d{3}-\d{3}$/.test(value);
+                return this.optional(element) || /^\d{3}-\d{3}-\d{4}$/.test(value);
             }, "מספר הטלפון מוכרח להיות 10 תווים");
 
             // email validate
@@ -603,9 +605,9 @@ function removeFile(){
             // end
 
 
-            $('#first_name,#last_name,#unique_id,#hometown,#street,#home_no,#client_phone,#client_email').on('keyup', function() {
+            $('#first_name,#last_name,#unique_id,#locality,#route,#street_number,#client_phone,#client_email').on('keyup', function() {
 
-                if($("#first_name").val() != '' && $("#last_name").val() != '' && $("#unique_id").val() != '' && $("#hometown").val() != ''  && $("#street").val() != '' && $("#home_no").val() != '' && $("#client_phone").val() != '' && $("#client_email").val() != '' && $("#datepicker").val() != '' && $("#file-2").val() != '' ){
+                if($("#first_name").val() != '' && $("#last_name").val() != '' && $("#unique_id").val() != '' && $("#locality").val() != ''  && $("#route").val() != '' && $("#street_number").val() != '' && $("#client_phone").val() != '' && $("#client_email").val() != '' && $("#datepicker").val() != '' && $("#file-2").val() != '' ){
 
                     $("#private_2_form").css("opacity","1"); // button opacity change
                     $("#private_2_form").css("cursor","pointer");
@@ -623,7 +625,7 @@ function removeFile(){
 
             $('#file-2,#datepicker').on('change', function() {
 
-                if($("#first_name").val() != '' && $("#last_name").val() != '' && $("#unique_id").val() != '' && $("#hometown").val() != ''  && $("#street").val() != '' && $("#home_no").val() != '' && $("#client_phone").val() != '' && $("#client_email").val() != '' && $("#datepicker").val() != '' && $("#file-2").val() != '' ){
+                if($("#first_name").val() != '' && $("#last_name").val() != '' && $("#unique_id").val() != '' && $("#locality").val() != ''  && $("#route").val() != '' && $("#street_number").val() != '' && $("#client_phone").val() != '' && $("#client_email").val() != '' && $("#datepicker").val() != '' && $("#file-2").val() != '' ){
 
                         $("#private_2_form").css("opacity","1"); // button opacity change
                         $("#private_2_form").css("cursor","pointer");
@@ -640,6 +642,57 @@ function removeFile(){
 
 
             $("#private_2_form").click(function(){
+                
+            var inputemail = $("#client_email").val();
+                
+                email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+            if(email_regex.test(inputemail)){ 
+            
+            $.ajax({
+        url: 'https://api.email-validator.net/api/verify',
+        type: 'POST',
+        cache: false,
+        crossDomain: true,
+        async:false,
+        data: { EmailAddress: inputemail, APIKey: 'ev-e2f2f73a1d635dc9fd65bad8ff7c7728' },
+        dataType: 'json',
+        success: function (json) {
+            // check API result
+            if (typeof(json.status) != "undefined") {
+                var resultcode = json.status;
+               
+                if(resultcode != 200 && resultcode != 207 && resultcode != 215)
+                {
+                    
+                             $('.customerror-email').show();
+							
+							$('#client_email-error').show();
+							
+							
+							
+							return false;
+                    
+                }else{
+                    	$('.customerror-email').hide();
+                }
+               
+                // resultcode 200, 207, 215 - valid
+                // resultcode 215 - can be retried to update catch-all status
+                // resultcode 114 - greylisting, wait 5min and retry
+                // resultcode 118 - api rate limit, wait 5min and retry
+                // resultcode 3xx/4xx - bad
+            }else{
+                
+               $('.customerror-email').show();
+							
+							$('#client_email-error').show();
+							
+							return false;
+            }
+        }
+    });
+    
+            }
 				
                 var form = $("#myform");
                     form.validate({
@@ -669,19 +722,19 @@ function removeFile(){
                                 required: true,
                                 number: true
                             },
-                            hometown: {
+                            locality: {
                                 required: true,
                             },
-                            street: {
+                            route: {
                                 required: true,
                             },
-                            home_no: {
+                            street_number: {
                                 required: true,
                                 number: true
                             },
                             client_phone: {
                                 customphone: true,
-                                // number: true
+                                phoneStartingWith: true,
                                 // min: 9,
                                 // max: 10
                             },
@@ -711,18 +764,20 @@ function removeFile(){
                                 required: "שדה חובה",
                                 number: "אנא הזן את המספר"
                             },
-                            hometown: {
+                            locality: {
                                 required: "שדה חובה",
                             },
-                            street: {
+                            route: {
                                 required: "שדה חובה",
                             },
-                            home_no: {
+                            street_number: {
                                 required: "שדה חובה",
                                 number: "אנא הזן את המספר"
                             },
                             client_phone: {
-                                required: "שדה חובה",
+                                required: "שדה ח",
+                                phoneStartingWith: 'Phone number must start with 05'
+                                
                                 // number: "אנא הזן את המספר"
                                 // min: "מספר הטלפון מוכרח להיות 10 תווים",
                                 // max: "מספר הטלפון מוכרח להיות 10 תווים"
@@ -769,7 +824,7 @@ function removeFile(){
                         $('#private_2_form').prop('disabled', true);
                     }
 
-                if($("#first_name").val() != '' && $("#last_name").val() != '' && $("#unique_id").val() != '' && $("#hometown").val() != ''  && $("#street").val() != '' && $("#home_no").val() != '' && $("#client_phone").val() != '' && $("#client_email").val() != '' && $("#datepicker").val() != '' && $("#file-2").val() != '' ){
+                if($("#first_name").val() != '' && $("#last_name").val() != '' && $("#unique_id").val() != '' && $("#locality").val() != ''  && $("#route").val() != '' && $("#street_number").val() != '' && $("#client_phone").val() != '' && $("#client_email").val() != '' && $("#datepicker").val() != '' && $("#file-2").val() != '' ){
 						
                     $("#private_2_form").css("opacity","1"); 
                     $("#private_2_form").css("cursor","pointer");
@@ -823,6 +878,13 @@ function removeFile(){
 				   }
 						
 						$('.verfy_phone_box').html("<a onclick='varify(1)' style='font-size:12px; color:#add8e6; cursor:pointer;'>אמת את מספר הטלפון</a></span><label class='control-label gform_wrapper'></label>");
+						
+						if(flag != 1){
+						
+						$('.errorotp').html('חדש נשלח למספר הטלפון שהזנת קוד');
+		  
+		                 $('.errorotp').css('color','red');
+						}
 				
 			   },1000);
 			   
@@ -846,13 +908,17 @@ function removeFile(){
 		  $('.re-send-otp').prop('disabled',true);
 		  
 		  
-		  if($("#first_name").val() != '' && $("#last_name").val() != '' && $("#unique_id").val() != '' && $("#hometown").val() != ''  && $("#street").val() != '' && $("#home_no").val() != '' && $("#client_phone").val() != '' && $("#client_email").val() != '' && $("#datepicker").val() != '' && $("#file-2").val() != '' ){
+		  if($("#first_name").val() != '' && $("#last_name").val() != '' && $("#unique_id").val() != '' && $("#locality").val() != ''  && $("#route").val() != '' && $("#street_number").val() != '' && $("#client_phone").val() != '' && $("#client_email").val() != '' && $("#datepicker").val() != '' && $("#file-2").val() != '' ){
 
                     $("#private_2_form").css("opacity","1"); // button opacity change
                     $("#private_2_form").css("cursor","pointer");
                     $('#private_2_form').prop('disabled', false);
 
                 }
+                
+                setTimeout(function(){
+                    $('#verificationModel').modal('hide');
+                },1000);
 				
 	  }else{
 		  $('.errorotp').html('קוד שגוי');
@@ -946,7 +1012,7 @@ function removeFile(){
                         <li class="gf_left_third gfield text-field1_application form-group">
                         
                             <div class="styled-input wide">
-                               <input type="text" name="unique_id" id="unique_id" value="" class="form-control third_text" required="">
+                               <input type="text" name="unique_id" id="unique_id" value="" class="form-control third_text" required="" maxlength='9'>
                                 <label class="gfield_label control-label gform_wrapper gfield_label" for="unique_id">ת.ז  
                             </label>
                             </div> 
@@ -991,42 +1057,55 @@ function removeFile(){
                         
                                 <input
                                 id="autocomplete"
-                                placeholder="Enter your address"
+                                placeholder="הכנס כתובת"
                                 onFocus="geolocate()"
                                 type="text" class="form-control" required=""
                               />
                               
                             </div> 
                         </li>
+                        
 
-                        <li class="gfield gf_left_third text-field1_application form-group">
+                        <li class="gfield gf_left_third text-field2_application form-group">
                            
 
                             <div class="styled-input wide">
-                               <input type="text" name="hometown" id="hometown" value="" class="form-control hometown_text" required="">
-                                <label class="gfield_label control-label gform_wrapper gfield_label" for="hometown"> עיר מגורים
+                               <input type="text" name="hometown" id="locality" value="" class="form-control hometown_text" required="">
+                                <label class="gfield_label control-label gform_wrapper gfield_label needtopaddingremove" for="hometown"> עיר מגורים
                             </label>
                             </div> 
                         </li>
-                       
-                        <li class="gfield gf_left_third text-field2_application form-group">
+                        
+                        <li class="gfield gf_left_third text-field1_application form-group">
                             
                             <div class="styled-input wide">
-                               <input type="text" name="street" id="street" value="" class="form-control street_text" required="">
-                                <label class="gfield_label control-label gform_wrapper gfield_label" for="street"> רחוב
+                               <input type="text" name="street" id="route" value="" class="form-control street_text" required="">
+                                <label class="gfield_label control-label gform_wrapper gfield_label needtopaddingremove" for="route"> רחוב
                             </label>
                             </div>
                         </li>
 
 
+                        <li class="gf_left_third gfield text-field2_application form-group">
+                            
+
+                            <div class="styled-input wide">
+                            
+                               <input type="text" name="home_no" id="street_number" value="" class="form-control No_Home_text" required="">
+
+                               <label class="gfield_label control-label gform_wrapper gfield_label needtopaddingremove" for="No_Home">מס’ בית
+                            </label>
+                            </div> 
+                        </li>
+                        
                         <li class="gf_left_third gfield text-field1_application form-group">
                             
 
                             <div class="styled-input wide">
                             
-                               <input type="text" name="home_no" id="home_no" value="" class="form-control No_Home_text" required="">
+                               <input type="text" id="postal_code" value="" class="form-control" required="">
 
-                               <label class="gfield_label control-label gform_wrapper gfield_label" for="No_Home">מס’ בית
+                               <label class="gfield_label control-label gform_wrapper gfield_label needtopaddingremove" for="postal_code" >מיקוד
                             </label>
                             </div> 
                         </li>
@@ -1037,8 +1116,8 @@ function removeFile(){
 						
 						
 						<div class='col-md-5'>
-						   <div class="styled-input wide">
-							<span class='verfy_phone_box' style='font-size:12px; color:#add8e6;'><a onclick='varify(1)' style='font-size:12px; color:#add8e6; cursor:pointer;'>אמת את מספר הטלפון</a></span>
+						   <div class="styled-input wide" style='margin-top:15px;'>
+							<span class='verfy_phone_box form-control' style='box-shadow: 0 0px 0px #3a3078 !important; opacity:1;'><a onclick='varify(1)' style='font-size:16px; color:#4EB5D7; cursor:pointer;'>אמת את מספר הטלפון</a></span>
 							<label class="control-label gform_wrapper">
                             </label>
 							</div>
@@ -1049,7 +1128,7 @@ function removeFile(){
                           
                             <div class="styled-input wide">
                                <input type="text" name="client_phone" id="client_phone" value="" class="form-control client_phone_text"  required="" style='width:70%;'> 
-							    <span class='customerror' style='dsplay:none;'></span>
+							    <span class='customerror' style='display:none;'></span>
                                 <label class="gfield_label control-label gform_wrapper gfield_label" for="client_phone">טלפון נייד
                             </label>
                             </div> 
@@ -1062,6 +1141,7 @@ function removeFile(){
                            
                             <div class="styled-input wide">
                                <input type="text" name="client_email" id="client_email" value="" class="form-control fifth_text" required="">
+                               <span class='customerror-email' style='display:none;'><span id="client_email-error" class="" style="color:#EC0D0D; float:right;"> האימייל שהוזן אינו תקין  </span></span>
                                 <label class="gfield_label control-label gform_wrapper gfield_label" for="client_email">מייל
                             </label>
                             </div> 
@@ -1121,17 +1201,18 @@ function removeFile(){
 <style type="text/css">
 	.btn-primary:hover {
 		color: #fff;
-		background-color: #4eda5c;
-		border-color: #4eda5c;
+		background-color: #3a3b79;
+		border-color: #3a3b79;
 	}
 	
 	.btn-primary {
-		background-color: #4eda5c;
-		border-color: #4eda5c;
+		background-color: #3a3b79;
+		border-color: #3a3b79;
 		border-radius: 30px;
 		font-weight: bold;
 		font-family: Assistant !important;
-		width: 65px;
+		width: 84px;
+		font-size: 18px;
 	}
 	
 	.btn-info:hover {
@@ -1145,7 +1226,8 @@ function removeFile(){
 		border-radius: 30px;
 		font-weight: bold;
 		font-family: Assistant !important;
-		width: 145px;
+		width: 185px;
+		font-size: 18px;
 	}
 	
 	.btn-secondary:hover {
@@ -1161,7 +1243,8 @@ function removeFile(){
 		border-radius: 30px;
 		font-weight: bold;
 		font-family: Assistant !important;
-		width: 70px;
+		width: 75px;
+		font-size: 18px;
 	}
 	
 	.padClass{
@@ -1217,46 +1300,37 @@ function removeFile(){
         street_number: "short_name",
         route: "long_name",
         locality: "long_name",
-        administrative_area_level_1: "short_name",
-        country: "long_name",
         postal_code: "short_name",
       };
 
       function initAutocomplete() {
-        // Create the autocomplete object, restricting the search predictions to
-        // geographical location types.
-        autocomplete = new google.maps.places.Autocomplete(
-          document.getElementById("autocomplete"),
-          { types: ["geocode"] }
-        );
-        // Avoid paying for data that you don't need by restricting the set of
-        // place fields that are returned to just the address components.
-        autocomplete.setFields(["address_component"]);
-        // When the user selects an address from the drop-down, populate the
-        // address fields in the form.
-        autocomplete.addListener("place_changed", fillInAddress);
-      }
+			autocomplete = new google.maps.places.Autocomplete(
+				(document.getElementById('autocomplete')), {
+					types: ['geocode']
+				});
+			autocomplete.addListener('place_changed', fillInAddress);
+		}
 
       function fillInAddress() {
-        // Get the place details from the autocomplete object.
-        const place = autocomplete.getPlace();
-
-        for (const component in componentForm) {
-          document.getElementById(component).value = "";
-          document.getElementById(component).disabled = false;
-        }
-
-        // Get each component of the address from the place details,
-        // and then fill-in the corresponding field on the form.
-        for (const component of place.address_components) {
-          const addressType = component.types[0];
-
-          if (componentForm[addressType]) {
-            const val = component[componentForm[addressType]];
-            document.getElementById(addressType).value = val;
-          }
-        }
-      }
+			var place = autocomplete.getPlace();
+			for (var component in componentForm) {
+				document.getElementById(component).value = '';
+				//document.getElementById(component).disabled = false; 
+			}
+			console.log(componentForm);
+			for (var i = 0; i < place.address_components.length; i++) {
+				var addressType = place.address_components[i].types[0];
+				
+				if (componentForm[addressType]) {
+					var val = place.address_components[i][componentForm[addressType]];
+					document.getElementById(addressType).value = val;
+					
+				}
+			}
+			
+			//$('.needtopaddingremove').css('padding','0px');
+		//	$('.needtopaddingremove').css('top','0px');
+		}
 
       // Bias the autocomplete object to the user's geographical location,
       // as supplied by the browser's 'navigator.geolocation' object.
@@ -1276,4 +1350,62 @@ function removeFile(){
         }
       }
     </script>
+    
+    <script>
+    $(document).ready(function(){
+        jQuery.validator.addMethod("phoneStartingWith", function(phone_number, element) {
+    phone_number = phone_number.replace(/\s+/g, "");
+    return this.optional(element) || phone_number.match(/^05|07;/);
+}, "Phone number must be start with 05");
+        
+    });
+    </script>
+    
+<script>
+   /* $(document).ready(function(){
+        jQuery.validator.addMethod("varifyemail", function(email, element) {
+            
+            email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+            if(email_regex.test(email)){ 
+            
+            $.ajax({
+        url: 'https://api.email-validator.net/api/verify',
+        type: 'POST',
+        cache: false,
+        crossDomain: true,
+        async:false,
+        data: { EmailAddress: email, APIKey: 'ev-e2f2f73a1d635dc9fd65bad8ff7c7728' },
+        dataType: 'json',
+        success: function (json) {
+            // check API result
+            if (typeof(json.status) != "undefined") {
+                var resultcode = json.status;
+               
+                if(resultcode != 200 && resultcode != 207 && resultcode != 215)
+                {
+                    return false;
+                }else{
+                    return /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(email);
+                }
+               
+                // resultcode 200, 207, 215 - valid
+                // resultcode 215 - can be retried to update catch-all status
+                // resultcode 114 - greylisting, wait 5min and retry
+                // resultcode 118 - api rate limit, wait 5min and retry
+                // resultcode 3xx/4xx - bad
+            }else{
+                
+                return false;
+            }
+        }
+    });
+            }else{
+            return /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(email);;
+            }
+   
+}, "Failed to varify the email!");
+        
+    });*/
+</script>
+    
 

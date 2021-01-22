@@ -296,7 +296,7 @@
 
 						<div class="btnlanding-page">
 							<div class="btn1">
-								<a href="<?php if(!empty($banner_detail)){ echo $banner_detail[0]->first_button_url; }else{ echo "#"; } ?>"><button type="button" class="btn btn-default"><?php if(!empty($banner_detail)){ echo $banner_detail[0]->first_button_text; } ?></button></a>
+								<a href="javascript: voiide(0)"><button type="button" class="btn btn-default"><?php if(!empty($banner_detail)){ echo $banner_detail[0]->first_button_text; } ?></button></a>
 							</div>
 							<div class="btn2">
 								<!-- <a href="<?php //if(!empty($banner_detail)){ echo $banner_detail[0]->second_button_url; }else{ echo "#"; } ?>"><button type="button" class="btn btn-default video-modal-btn" data-toggle="modal"><i class="fa fa-play-circle" aria-hidden="true" data-src="https://www.youtube.com/embed/Jfrjeg26Cwk" data-target="#youtubeModal"></i><?php //if(!empty($banner_detail)){ echo $banner_detail[0]->second_button_text; } ?></button></a> -->
@@ -616,7 +616,7 @@
 						<?php if(!empty($section_4_details)){ echo $section_4_details[0]->first_sub_title_text; } ?>
 
 						<div class="btn1 btnsecond">
-								<a href="<?php if(!empty($section_4_details)){ echo $section_4_details[0]->first_button_url; }else{ echo "#"; } ?>"><button type="button" class="btn btn-default"><?php if(!empty($section_4_details)){ echo $section_4_details[0]->first_button_text; } ?></button></a>
+								<a href="javascript: voiide(0)"><button type="button" class="btn btn-default"><?php if(!empty($section_4_details)){ echo $section_4_details[0]->first_button_text; } ?></button></a>
 							</div>
 					</div>
 					
@@ -627,7 +627,7 @@
 						<?php if(!empty($section_4_details)){ echo $section_4_details[0]->second_sub_title_text; } ?>
 
 						<div class="btn1 btnsecond">
-								<a href="<?php if(!empty($section_4_details)){ echo $section_4_details[0]->second_button_url; }else{ echo "#"; } ?>"><button type="button" class="btn btn-default"><?php if(!empty($section_4_details)){ echo $section_4_details[0]->second_button_text; } ?></button></a>
+								<a href="javascript: voiide(0)"><button type="button" class="btn btn-default"><?php if(!empty($section_4_details)){ echo $section_4_details[0]->second_button_text; } ?></button></a>
 							</div>
 					</div>
 				</div>
@@ -676,13 +676,13 @@
 	  </div>
 	</div> 
 
-	<div class="modal fade" id="StartModal">
+	<div class="modal fade" id="StartModal" data-keyboard="false" data-backdrop="static">
 		<div class="modal-dialog modal-lg  modal-dialog-centered">
 			<div class="modal-content">
 							      
 				<!-- Modal Header -->
 				<div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <button type="button" class="close" aria-hidden="true">×</button>
                 </div>
 							        
 				<!-- Modal body -->
@@ -695,7 +695,7 @@
 		                    	ואנחנו כאן כדי לייצר מהפכה בעולם הערבויות לשכירת דירות, משרדים מסחר ועסקים. 
 							</p>
 							<p>
-								הפעילות שלנו תתחיל ,בקרוב   עד אז תוכלו לשלוח לנו בקשות או לשאול אותנו שאלות ולצפות בסרט קצר שהכנו עבורכם.
+								הפעילות שלנו תתחיל בקרוב   ,עד אז תוכלו לשלוח לנו בקשות או לשאול אותנו שאלות ולצפות בסרט קצר שהכנו עבורכם.
 							</p>
 		                </div>
 						<div class="col-md-12">
@@ -712,7 +712,7 @@
 									<iframe src="//www.youtube.com/embed/8694bMCyjV0" frameborder="0"></iframe>
 								</div>
 								<div class="btn1">
-									<a href="/contactus">
+									<a href="/site/contactus">
 										<button type="button" class="btn btn-default">שמרו על קשר  </button>
 									</a>
 								</div>

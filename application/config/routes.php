@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'website';
+$route['default_controller'] = 'site';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['welcomeObli'] = 'website/welcomeObli';
@@ -170,3 +170,8 @@ $route['business4PaymentFailed'] = 'BusinessFourth/business4PaymentFailed';
 
 // Website forms
 $route['company'] = 'admin/company_list';
+
+// Fully Verified
+$route['kyc'] = 'FullyVerified/kyc';
+$route['verification-data'] = 'FullyVerified/get_verification_data';
+$route['verification-status'] = 'FullyVerified/set_verification_status';

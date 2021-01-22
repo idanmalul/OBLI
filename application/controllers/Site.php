@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Website extends CI_Controller {
+class Site extends CI_Controller {
     
     function __construct() {
 
@@ -10,14 +10,6 @@ class Website extends CI_Controller {
          error_reporting(0);
          
     }
-    
-  function userdashboard(){
-      
-        $this->load->view('website/dashboard_header');
-        $this->load->view('website/dashboard');
-        $this->load->view('website/footer');
-      
-  }
 
     function pdf($html,$pdf_location){
         // $file_path = base_url() . "doc_sign/5de0fb3a5b6d21223182045.png";
@@ -790,9 +782,9 @@ class Website extends CI_Controller {
         $sql9 = "SELECT * FROM testmonial_section_3 where status = 1";
         $data['slider_details'] = $this->project_model->get_query_result($sql9);
 
-        $this->load->view('website/header');
-        $this->load->view('website/body_content', $data);
-        $this->load->view('website/footer', $data);
+        $this->load->view('website/unuse_header');
+        $this->load->view('website/unuse_body_content', $data);
+        $this->load->view('website/unuse_footer', $data);
        
     }
 
@@ -822,9 +814,9 @@ class Website extends CI_Controller {
         $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
         $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-        $this->load->view('website/header');
+        $this->load->view('website/unuse_header');
         $this->load->view('website/about_us', $data);
-        $this->load->view('website/footer', $data);
+        $this->load->view('website/unuse_footer', $data);
     }
 
     function contactus()
@@ -969,9 +961,9 @@ class Website extends CI_Controller {
             $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
             $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/contact_us');
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
         }
         
     }
@@ -991,9 +983,9 @@ class Website extends CI_Controller {
         $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
         $data['logo_details'] = $this->project_model->get_query_result($sql6);
         
-        $this->load->view('website/header');
+        $this->load->view('website/unuse_header');
         $this->load->view('website/faq');
-        $this->load->view('website/footer', $data);
+        $this->load->view('website/unuse_footer', $data);
     }
 
     function policy()
@@ -1011,9 +1003,9 @@ class Website extends CI_Controller {
         $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
         $data['logo_details'] = $this->project_model->get_query_result($sql6);
         
-        $this->load->view('website/header');
+        $this->load->view('website/unuse_header');
         $this->load->view('website/policy');
-        $this->load->view('website/footer', $data);
+        $this->load->view('website/unuse_footer', $data);
     }
 
     function terms()
@@ -1031,9 +1023,9 @@ class Website extends CI_Controller {
         $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
         $data['logo_details'] = $this->project_model->get_query_result($sql6);
         
-        $this->load->view('website/header');
+        $this->load->view('website/unuse_header');
         $this->load->view('website/terms');
-        $this->load->view('website/footer', $data);
+        $this->load->view('website/unuse_footer', $data);
     }
 
     function saveImage()
@@ -1200,9 +1192,9 @@ class Website extends CI_Controller {
                     
                 $form_data['error'] = 'Supported Media Type - gif, jpg, png, jpeg.';
                 
-                // $this->load->view('website/header');
+                // $this->load->view('website/unuse_header');
                 // $this->load->view('website/tenant', $form_data);
-                // $this->load->view('website/footer', $data);
+                // $this->load->view('website/unuse_footer', $data);
                 // return false;
                 }
                 $client_file = base_url().'webservices/obli_profile_images/'.$file_name;
@@ -1312,9 +1304,9 @@ class Website extends CI_Controller {
 
               
 
-                $this->load->view('website/header');
+                $this->load->view('website/unuse_header');
                 $this->load->view('website/new_form', $form_data);
-                $this->load->view('website/footer', $data);
+                $this->load->view('website/unuse_footer', $data);
             } 
         // api end
 
@@ -1322,9 +1314,9 @@ class Website extends CI_Controller {
 
         }
         else{
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/new_form');
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
         }
 
     }
@@ -1511,9 +1503,9 @@ class Website extends CI_Controller {
                         $form_data['error'] = 'Supported Media Type - gif, jpg, png, jpeg.';
                        
                         
-                        // $this->load->view('website/header');
+                        // $this->load->view('website/unuse_header');
                         // $this->load->view('website/tenant', $form_data);
-                        // $this->load->view('website/footer', $data);
+                        // $this->load->view('website/unuse_footer', $data);
                         // return false;
                         }
                         $another_account_file = base_url().'webservices/obli_profile_images/'.$file_name1;
@@ -1601,9 +1593,9 @@ class Website extends CI_Controller {
                         $form_data['error'] = 'Supported Media Type - gif, jpg, png, jpeg.';
                        
                         
-                        // $this->load->view('website/header');
+                        // $this->load->view('website/unuse_header');
                         // $this->load->view('website/tenant', $form_data);
-                        // $this->load->view('website/footer', $data);
+                        // $this->load->view('website/unuse_footer', $data);
                         // return false;
                         }
                         $order_file_name = base_url().'webservices/obli_profile_images/'.$file_name2;
@@ -2381,9 +2373,9 @@ class Website extends CI_Controller {
                 $form_data['error'] = 'Supported Media Type - gif, jpg, png, jpeg.';
                
                 
-                $this->load->view('website/header');
+                $this->load->view('website/unuse_header');
                 $this->load->view('website/tenant', $form_data);
-                $this->load->view('website/footer', $data);
+                $this->load->view('website/unuse_footer', $data);
                 return false;
                 }
                 $client_file = base_url().'webservices/obli_profile_images/'.$file_name;
@@ -2441,9 +2433,9 @@ class Website extends CI_Controller {
                 $form_data['error'] = 'Supported Media Type - gif, jpg, png, jpeg.';
                
                 
-                $this->load->view('website/header');
+                $this->load->view('website/unuse_header');
                 $this->load->view('website/tenant', $form_data);
-                $this->load->view('website/footer', $data);
+                $this->load->view('website/unuse_footer', $data);
                 return false;
                 }
                 $order_file_name = base_url().'webservices/obli_profile_images/'.$custom_name.'1.'.$new_extension;
@@ -2513,9 +2505,9 @@ class Website extends CI_Controller {
                         $form_data['error'] = 'Supported Media Type - gif, jpg, png, jpeg.';
                        
                         
-                        $this->load->view('website/header');
+                        $this->load->view('website/unuse_header');
                         $this->load->view('website/tenant', $form_data);
-                        $this->load->view('website/footer', $data);
+                        $this->load->view('website/unuse_footer', $data);
                         return false;
                         }
                         $another_account_file = base_url().'webservices/obli_profile_images/'.$custom_name.'2.'.$new_extension;
@@ -2591,9 +2583,9 @@ class Website extends CI_Controller {
               // echo "cURL Error #:" . $err;
                 $this->session->set_flashdata('error', 'שגיאה בהכנסה');
                 
-                $this->load->view('website/header');
+                $this->load->view('website/unuse_header');
                 $this->load->view('website/tenant');
-                $this->load->view('website/footer', $data);
+                $this->load->view('website/unuse_footer', $data);
             } else {
               // echo $response;
                 // $this->session->set_flashdata('success', 'פרטים נשמרו בהצלחה.');
@@ -2633,14 +2625,14 @@ class Website extends CI_Controller {
 
         }
         else {
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/tenant');
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
         }
         
-        // $this->load->view('website/header');
+        // $this->load->view('website/unuse_header');
         // $this->load->view('website/tenant');
-        // $this->load->view('website/footer', $data);
+        // $this->load->view('website/unuse_footer', $data);
     }
 
     function business_Form1(){
@@ -2677,9 +2669,9 @@ class Website extends CI_Controller {
             $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
             $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/business_1_scr');
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
         }
         
     }
@@ -2749,9 +2741,9 @@ class Website extends CI_Controller {
             $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
             $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/business_2_scr');
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
         }
     }
 
@@ -2800,9 +2792,9 @@ class Website extends CI_Controller {
                     
                 $form_data['error'] = 'Supported Media Type - gif, jpg, png, jpeg.';
                 
-                // $this->load->view('website/header');
+                // $this->load->view('website/unuse_header');
                 // $this->load->view('website/tenant', $form_data);
-                // $this->load->view('website/footer', $data);
+                // $this->load->view('website/unuse_footer', $data);
                 // return false;
                 }
                 $client_file = base_url().'webservices/obli_profile_images/'.$file_name;
@@ -2951,9 +2943,9 @@ class Website extends CI_Controller {
         $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
         $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-        $this->load->view('website/header');
+        $this->load->view('website/unuse_header');
         $this->load->view('website/business_3_scr');
-        $this->load->view('website/footer', $data);
+        $this->load->view('website/unuse_footer', $data);
         }
     }
 
@@ -2986,9 +2978,9 @@ class Website extends CI_Controller {
             $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
             $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/business_4_scr');
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
         }
     }
     
@@ -3038,9 +3030,9 @@ class Website extends CI_Controller {
             $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
             $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/business_5_scr');
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
         }
     }
     
@@ -3090,9 +3082,9 @@ class Website extends CI_Controller {
                     
                 $form_data['error'] = 'Supported Media Type - gif, jpg, png, jpeg.';
                 
-                // $this->load->view('website/header');
+                // $this->load->view('website/unuse_header');
                 // $this->load->view('website/tenant', $form_data);
-                // $this->load->view('website/footer', $data);
+                // $this->load->view('website/unuse_footer', $data);
                 // return false;
                 }
                 $client_file = base_url().'webservices/obli_profile_images/'.$file_name;
@@ -3135,9 +3127,9 @@ class Website extends CI_Controller {
             $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
             $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/business_6_scr');
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
         }
     }
     
@@ -3203,9 +3195,9 @@ class Website extends CI_Controller {
                     
                 $form_data['error'] = 'Supported Media Type - gif, jpg, png, jpeg.';
                 
-                // $this->load->view('website/header');
+                // $this->load->view('website/unuse_header');
                 // $this->load->view('website/tenant', $form_data);
-                // $this->load->view('website/footer', $data);
+                // $this->load->view('website/unuse_footer', $data);
                 // return false;
                 }
                 $client_file = base_url().'webservices/obli_profile_images/'.$file_name;
@@ -3261,9 +3253,9 @@ class Website extends CI_Controller {
                         $form_data['bus7_param'] = $this->input->post();
                         $form_data['error'] =  "זיהוי איש הקשר אינו חוקי , אנא בדוק!";
 
-                        $this->load->view('website/header');
+                        $this->load->view('website/unuse_header');
                         $this->load->view('website/business_7_scr', $form_data);
-                        $this->load->view('website/footer', $footer_data);
+                        $this->load->view('website/unuse_footer', $footer_data);
 //                        redirect('business7');
                         return false;  
 //                        die();
@@ -3281,9 +3273,9 @@ class Website extends CI_Controller {
             
         }else{
 //            echo 12; die();
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/business_7_scr', $form_data);
-            $this->load->view('website/footer', $footer_data);
+            $this->load->view('website/unuse_footer', $footer_data);
         }
     }
     
@@ -3334,9 +3326,9 @@ class Website extends CI_Controller {
             $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
             $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/business_8_scr');
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
         }
     }
     
@@ -3394,9 +3386,9 @@ class Website extends CI_Controller {
             $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
             $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/business_9_scr');
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
         }
     }
     
@@ -3755,9 +3747,9 @@ class Website extends CI_Controller {
                         $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
                         $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-                        $this->load->view('website/header');
+                        $this->load->view('website/unuse_header');
                         $this->load->view('website/business_10_scr');
-                        $this->load->view('website/footer', $data);
+                        $this->load->view('website/unuse_footer', $data);
 
                     }else{
                         redirect('business11');
@@ -3822,9 +3814,9 @@ class Website extends CI_Controller {
             $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
             $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/business_11_scr');
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
         }
     }
     
@@ -3845,9 +3837,9 @@ class Website extends CI_Controller {
             $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
             $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/business_first_bad_response',$data);
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
         
         
     }
@@ -4976,17 +4968,8 @@ class Website extends CI_Controller {
             // echo "<pre>"; print_r($pdf_data); print_r($pdf_data1); print_r($pdf_data2);
             // echo $first_document."<br>"; echo $second_document."<br>";
             // die();
-            
-            
-            if($business_type == 'חברה בע”מ'){
-                
-                $business_text_eng = 'business ltd';
-                
-            }else{
-                 $business_text_eng = 'licensed dealer';
-            }
 
-             $fields = array("client_id_number" => $unique_id, "guarantee_type" => $guarantee_type, "preferred_route" => $preferred_route, "client_first_name" => $first_name, "client_last_name" => $last_name, "guarantee_period_month" => $gur_period_month, "requested_amount" => $req_gur_amt, "first_signature_file" => $first_signature_file, "second_signature_file" => $second_signature_file, "amt_company_name" => $company_name, "amt_company_address" => $company_address, "amt_company_id" => $company_id, "amt_company_business_type" => $business_text_eng, "amt_company_contact_person_email" => $contact_person_email, "amt_company_contact_person_name" => $contact_person_name, "amt_company_contact_person_phone" => $contact_person_phone, "ant_first_name" => $ant_first_name, "ant_last_name" => $ant_last_name, "ant_unique_id" => $ant_unique_id, "ant_client_email" => $ant_client_email, "ant_client_phone" => $ant_client_phone, "ant_client_add" => $ant_client_add, "ant_req_gur_amt" => $ant_req_gur_amt, "ant_client_gender" => $ant_client_gender, "ant_account_birth_date" => $antsec_date_of_birth, "ant_lease_period" => $ant_lease_period, "ant_client_file" => $ant_client_file, "gr_company_name" => $b7_company_name, "gr_company_address" => $b7_company_address, "gr_company_email" => $company_email, "user_pdf" => $user_pdf, "gr_company_phone" => $company_telephone, "gr_company_url" => $gr_company_url, "gurantee_articles_of_association" => $gurantee_articles_of_association, "gurantee_certificate" => $gurantee_certificate, "gurantee_exemption_withholding_tax" => $gurantee_exemption_withholding_tax, "gurantee_bookkeeping_authorization" => $gurantee_bookkeeping_authorization, "gurantee_oval_attorney" => $gurantee_oval_attorney, "user_link" => $user_link, "first_document" => $first_document, "second_document" => $second_document, "b7_company_id" => $b7_company_id, "b7_contact_id" => $b7_contact_id, "guarantee_period_start_date" => $startDate, "guarantee_period_end_date" => $endDate, "another_guarantee_period_start_date" => $antstartDate, "another_guarantee_period_end_date" => $antendDate, "gurantee_direct_debit_authorization" => $gurantee_direct_debit_authorization,"gr_other_company_name"=>$b7_other_company_name, 'order_id_number' => $order_id_number,"house_rent_document"=>$house_rent_document,'tuplier_dradit' => $tuplier_dradit);
+             $fields = array("client_id_number" => $unique_id, "guarantee_type" => $guarantee_type, "preferred_route" => $preferred_route, "client_first_name" => $first_name, "client_last_name" => $last_name, "guarantee_period_month" => $gur_period_month, "requested_amount" => $req_gur_amt, "first_signature_file" => $first_signature_file, "second_signature_file" => $second_signature_file, "amt_company_name" => $company_name, "amt_company_address" => $company_address, "amt_company_id" => $company_id, "amt_company_business_type" => $business_type, "amt_company_contact_person_email" => $contact_person_email, "amt_company_contact_person_name" => $contact_person_name, "amt_company_contact_person_phone" => $contact_person_phone, "ant_first_name" => $ant_first_name, "ant_last_name" => $ant_last_name, "ant_unique_id" => $ant_unique_id, "ant_client_email" => $ant_client_email, "ant_client_phone" => $ant_client_phone, "ant_client_add" => $ant_client_add, "ant_req_gur_amt" => $ant_req_gur_amt, "ant_client_gender" => $ant_client_gender, "ant_account_birth_date" => $antsec_date_of_birth, "ant_lease_period" => $ant_lease_period, "ant_client_file" => $ant_client_file, "gr_company_name" => $b7_company_name, "gr_company_address" => $b7_company_address, "gr_company_email" => $company_email, "user_pdf" => $user_pdf, "gr_company_phone" => $company_telephone, "gr_company_url" => $gr_company_url, "gurantee_articles_of_association" => $gurantee_articles_of_association, "gurantee_certificate" => $gurantee_certificate, "gurantee_exemption_withholding_tax" => $gurantee_exemption_withholding_tax, "gurantee_bookkeeping_authorization" => $gurantee_bookkeeping_authorization, "gurantee_oval_attorney" => $gurantee_oval_attorney, "user_link" => $user_link, "first_document" => $first_document, "second_document" => $second_document, "b7_company_id" => $b7_company_id, "b7_contact_id" => $b7_contact_id, "guarantee_period_start_date" => $startDate, "guarantee_period_end_date" => $endDate, "another_guarantee_period_start_date" => $antstartDate, "another_guarantee_period_end_date" => $antendDate, "gurantee_direct_debit_authorization" => $gurantee_direct_debit_authorization,"gr_other_company_name"=>$b7_other_company_name, 'order_id_number' => $order_id_number,"house_rent_document"=>$house_rent_document,'tuplier_dradit' => $tuplier_dradit);
              
 
 //             echo "<pre>"; print_r($fields); echo "<br><br><br>";
@@ -5143,9 +5126,9 @@ class Website extends CI_Controller {
         $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
         $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-        $this->load->view('website/header');
+        $this->load->view('website/unuse_header');
         $this->load->view('website/business_9_scr');
-        $this->load->view('website/footer', $data);
+        $this->load->view('website/unuse_footer', $data);
         
     }
     
@@ -5185,9 +5168,9 @@ class Website extends CI_Controller {
             $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
             $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/business_12_scr', $usr_data);
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
         /*}*/
     }
 
@@ -5536,9 +5519,9 @@ class Website extends CI_Controller {
         $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
         $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-        $this->load->view('website/header');
+        $this->load->view('website/unuse_header');
         $this->load->view('website/businessThird/business_third_bad_response');
-        $this->load->view('website/footer', $data);
+        $this->load->view('website/unuse_footer', $data);
         
     }
                
@@ -5557,9 +5540,9 @@ class Website extends CI_Controller {
             $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
             $data['logo_details'] = $this->project_model->get_query_result($sql6);
 
-            $this->load->view('website/header');
+            $this->load->view('website/unuse_header');
             $this->load->view('website/welcome_obli');
-            $this->load->view('website/footer', $data);
+            $this->load->view('website/unuse_footer', $data);
     }
     
     

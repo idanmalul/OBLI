@@ -1763,7 +1763,7 @@ class PrivateFlow extends CI_Controller {
 
 			$cofaceResponse = curl_exec($curl);
 
-			//print_r($response);
+			echo 'ths is response'; print_r($cofaceResponse); die;
 
 			 // if(curl_exec($curl) === false)
 			// {
@@ -1776,7 +1776,7 @@ class PrivateFlow extends CI_Controller {
 
 
 			curl_close($curl);
-			// end cofacebdi api
+			// end cofacebdi api 
 
 			// salesforce api
             $url = 'https://obli-backend.herokuapp.com/webservices/privateOrderdetails.php';

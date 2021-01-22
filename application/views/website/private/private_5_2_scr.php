@@ -515,10 +515,13 @@ input[type=checkbox]:checked + label {
 
 <script>
    $( function() {
+       var maxBirthdayDate = new Date();
+maxBirthdayDate.setFullYear( maxBirthdayDate.getFullYear() - 21,maxBirthdayDate.getMonth(),maxBirthdayDate.getDate());
+
      $( "#datepicker" ).datepicker({
        changeMonth: true,
        changeYear: true,
-       // yearRange: "-80:+0"
+       maxDate: maxBirthdayDate,
        yearRange: "1930:+0"
 
      });
@@ -682,9 +685,9 @@ function removeFile2(){
 
         // phone number validation
         // $("#property_phone").inputmask('9999-999-999');
-        $("#ant_client_phone").inputmask('9999-999-999');
+        $("#ant_client_phone").inputmask('999-999-9999');
         $.validator.addMethod('customphone', function (value, element) {
-            return this.optional(element) || /^\d{4}-\d{3}-\d{3}$/.test(value);
+            return this.optional(element) || /^\d{3}-\d{3}-\d{4}$/.test(value);
         }, "מספר הטלפון מוכרח להיות 10 תווים");
 
         // email validate
@@ -774,13 +777,17 @@ function removeFile2(){
                         ant_unique_id: {
                             required: true,
                             number: true
+                            
                         },
                         ant_req_gur_amt: {
                             required: true,
-                            number: true
+                            number: true, 
+                            min: 100,
+                            max: 46500
                         },
                         ant_client_phone: {
-                            customphone: true
+                            customphone: true,
+                            phoneStartingWith:true
                         },
                         ant_client_email: {
                             required: true,
@@ -809,11 +816,15 @@ function removeFile2(){
                         // },
                         ant_unique_id: {
                             required: "שדה חובה",
-                            number: "אנא הזן את המספר"
+                            phoneStartingWith: 'Phone number must be start wth 05 or 07',
+                            number: "אנא הזן את המספ,ר"
                         },
                         ant_req_gur_amt: {
                             required: "שדה חובה",
-                            number: "אנא הזן את המספר"
+                            number: "אנא הזן את המספר",
+                            min: "אנא הכנס את ערך הסכום 100 עד 46500",
+                            max: "אנא הכנס את ערך הסכום 100 עד 46500"
+
                         },
                         ant_client_phone: {
                             required: "שדה חובה"
@@ -986,7 +997,7 @@ function removeFile2(){
                         <li class="gf_left_third gfield text-field1_application form-group">
 
                             <div class="styled-input wide">
-                               <input type="text" name="ant_unique_id" id="ant_unique_id" value="" class="form-control seven3_left" required="">
+                               <input type="text" name="ant_unique_id" id="ant_unique_id" value="" class="form-control seven3_left" required="" maxlength='9'>
 
 
                                <label class="gfield_label control-label gform_wrapper gfield_label" for="ant_unique_id">ת.ז   
@@ -1100,7 +1111,7 @@ function removeFile2(){
                         <li class="gf_middle_third gfield text-field1_application form-group">
                           
                             <div class="styled-input wide">
-                               <input type="text" name="ant_req_gur_amt" id="ant_req_gur_amt" value="" class="form-control seven7_left" required="">
+                               <input type="text" name="ant_req_gur_amt" id="ant_req_gur_amt" value="" class="form-control seven7_left" required=""  maxlength='6'>
 
                                 <label class="gfield_label control-label gform_wrapper gfield_label" for="ant_req_gur_amt">סכום הערבות והסכמים  
                             </label>
@@ -1150,3 +1161,12 @@ function removeFile2(){
 <link rel="stylesheet" href="<?php echo base_url() ?>website_assets/date/daterangepicker-bs3.css">
 <script src="<?php echo base_url() ?>website_assets/date/moment.min.js"></script>
 <script src="<?php echo base_url() ?>website_assets/date/daterangepicker.js"></script>
+<script>
+    $(document).ready(function(){
+        jQuery.validator.addMethod("phoneStartingWith", function(phone_number, element) {
+    phone_number = phone_number.replace(/\s+/g, "");
+    return this.optional(element) || phone_number.match(/^05|07;/);
+}, "Phone number must be start with 05");
+        
+    });
+    </script>

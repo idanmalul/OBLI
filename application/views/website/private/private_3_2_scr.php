@@ -622,7 +622,7 @@ input[type=checkbox]:checked + label {
                             required: true,
                             money: true,
                             min: 100,
-                            max: 100000
+                            max: 46500
                         },
                         gur_period_month: {
                             required: true
@@ -632,8 +632,8 @@ input[type=checkbox]:checked + label {
                         private2_requested_gurantee_amt: {
                             required: "שדה חובה",
                             money: "אנא הזן את המספר",
-                            min: "אנא הכנס את ערך הסכום 100 עד 100000",
-                            max: "אנא הכנס את ערך הסכום 100 עד 100000"
+                            min: "אנא הכנס את ערך הסכום 100 עד 46500",
+                            max: "אנא הכנס את ערך הסכום 100 עד 46500"
 
                         },
                         gur_period_month: {
@@ -1420,7 +1420,7 @@ input[type=checkbox]:checked + label {
                         <li class="gf_middle_third gfield text-field1_application form-group">
                       
                             <div class="styled-input wide" >
-                               <input type="text" name="private2_requested_gurantee_amt" id="private2_requested_gurantee_amt" value="" class="form-control fouth_text" autocomplete="off" required="">
+                               <input type="text" name="private2_requested_gurantee_amt" id="private2_requested_gurantee_amt" value="" class="form-control fouth_text" autocomplete="off" required="" maxlength='7'>
 
                                 <label class="gfield_label control-label gform_wrapper gfield_label" for="private2_requested_gurantee_amt">סכום הערבות והסכמים  
                             </label>
