@@ -47,7 +47,9 @@
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-center lstcenternaviation">
-						<li><a href="<?php echo site_url('website'); ?>" <?php if (base_url(uri_string()) == site_url('website')) { echo 'class=active'; } ?>> עמוד הבית  </a></li>
+					    <?php if($this->uri->segment(1) != 'website'){?>
+						<li><a href="<?php echo site_url('website'); ?>" <?php if (base_url(uri_string()) == site_url('website')) { echo 'class=active'; } ?>> עמוד הבית  </a></li
+						<?php } ?>
 						<li><a href="<?php echo site_url('private1'); ?>" <?php if (base_url(uri_string()) == site_url('private1')) { echo 'class=active'; } ?>>פרטי</a></li>
 						<!-- <li><a href="<?php echo site_url('aboutus'); ?>">אודות   </a></li> -->
 						<li><a href="<?php echo site_url('business1'); ?>" <?php if (base_url(uri_string()) == site_url('business1')) { echo 'class=active'; } ?>>עסקי</a></li>

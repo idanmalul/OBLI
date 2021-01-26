@@ -518,7 +518,7 @@ input[type=checkbox]:checked + label {
                           <input type='hidden' value='<?php echo $otp;?>' id='otpval'>
                           
                           <?php } ?>
-                          <label class="gfield_label control-label gform_wrapper gfield_label label_direction" for="input_5_1"> Phone Number   </label>
+                          <label class="gfield_label control-label gform_wrapper gfield_label label_direction" style='top:-3px !important;' for="input_5_1"> Phone Number   </label>
                         </div> 
                      </li>
                      

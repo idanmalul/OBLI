@@ -1287,15 +1287,16 @@ function closeMessageModal(){
                 if($business_type == 'חברה בע”מ'){ ?>
 //                    location.href = "<?php // echo site_url('business6'); ?>";
 //                        alert(5);
-                       // without_payment_api();
+                        without_payment_api();
                        
-                       payment_api();
+                      // payment_api(); by manikant
                     <?php
                 }
                 else{
                     ?>
 //                    alert(6);
-                    payment_api();
+                        without_payment_api();
+                   // payment_api(); by manikant
                     <?php
                 }
             }
@@ -1326,13 +1327,17 @@ function closeMessageModal(){
 //                    location.href = "<?php // echo site_url('business7'); ?>";
 //                        alert(9);
                        // without_payment_api();
-                       payment_api();
+                      // payment_api(); by manikant
+                      
+                      without_payment_api();
                     <?php
                 }
                 else{
                     ?>
 //                    alert(10);
-                    payment_api();
+                    // payment_api(); by manikant
+                    
+                    without_payment_api();
                     <?php
                 }
             }

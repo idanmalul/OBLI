@@ -28,6 +28,7 @@ function varify()
         
         if(!empty($data))
         {
+            $data['values']['phone'] = $data['values']['client_phone'];
             
             $this->load->helper('common_helper');
 		

@@ -128,7 +128,7 @@ if(!function_exists('get_slider_by_set_order'))
 			
 			$posturl = 'https://uapi.inforu.co.il/SendMessageXml.ashx?InforuXML='.urlencode($data);
 			
-		$result = file_get_contents($posturl);
+		 $result = file_get_contents($posturl); 
 			
 			return $otp;
 			

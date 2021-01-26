@@ -1763,7 +1763,7 @@ class PrivateFlow extends CI_Controller {
 
 			$cofaceResponse = curl_exec($curl);
 
-			echo 'ths is response'; print_r($cofaceResponse); die;
+			//echo 'ths is response'; print_r($cofaceResponse); die;
 
 			 // if(curl_exec($curl) === false)
 			// {
