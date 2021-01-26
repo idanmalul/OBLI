@@ -1838,11 +1838,11 @@ class PrivateFlow extends CI_Controller {
                          }else{
                              
                              $this->session->set_userdata($newdata);
-                             
+//                           todo we need "private2" data for KYC process don't remove it from session
                            $session_array = array('private1', 'private3', 'private4', 'private5', 'private6', 'private7');
                             $this->session->unset_userdata($session_array);
 
-                            echo "<script type='text/javascript'>alert('Your record successfully saved!');window.location.href = '".site_url('private8')."';</script>";
+                            echo "<script type='text/javascript'>alert('Your record successfully saved!');window.location.href = '".site_url('kyc')."';</script>";
                             return FALSE;
                          }
                          
