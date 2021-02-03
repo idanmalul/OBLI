@@ -11,6 +11,8 @@ class BusinessThird extends CI_Controller {
          
          error_reporting(0);
          
+         $this->load->helper('common_helper');
+         
     }
     
     function business_third_Form1(){
@@ -241,11 +243,65 @@ class BusinessThird extends CI_Controller {
 //            echo '<pre>';
 //            print_r($data);
             
+            
+            $company_name = $data['company_name'];
+            $business_type = $data['business_type'];
+            $company_id = $data['company_id'];
+            $company_address = $data['company_address'];
+            
+            $Area__c = $data['Area__c'];
+            $Business_Field__c = $data['Business_Field__c'];
+            
+            $contact_person_name = $data['contact_person_name'];
+            $contact_person_email = $data['contact_person_email'];
+            $contact_person_phone = $data['contact_person_phone'];
+            $contact_person_phone = str_replace(["-"], '', $contact_person_phone);
+            
+            $order_id_number = $this->session->userdata('order_id_number');
+            
+            
+            $businessThird1 = $this->session->userdata('businessThird1');
+            
+            $unique_id = $businessThird1['unique_id'];
+            
+            $fields = array("Business_Field__c"=>$Business_Field__c,"Area__c"=>$Area__c,"amt_company_name__c" => $company_name,
+            "amt_company_address__c" => $company_address, "amt_company_id__c" => $company_id, "amt_company_business_type__c" => $business_text_eng,
+            "amt_company_contact_person_email__c" => $contact_person_email, "amt_company_contact_person_name__c" => $contact_person_name, 
+            "amt_company_contact_person_phone__c" => $contact_person_phone,'order_id_number__c' => $order_id_number,'flow_number__c'=>5,'client_id_number'=>$unique_id);
+
+//             echo "<pre>"; print_r($fields); 
+//             die();
+
+            
+            // api call
+            $url = 'https://obli-backend.herokuapp.com/webservices/newbusnessthirdordersdetails.php';
+
+              $request = sf_register_record($url,$fields);
+             $request = json_decode($request);
+             
+            //execute post
+            $client_c = $request->client_c;
+            $err = $request->errors;
+            
+            $data['error'] = 0;
+            
+            if(!empty($err)){
+                
+                $data['error'] = 1;
+            
+            }
+            
+            if(!empty($client_c)){
+                $data['client_c'] = $client_c;
+            }
+            
             $newdata = array(
                 'businessThird2' => $data
             );
-//            print_r($this->session->userdata('business1'));
+
             $this->session->set_userdata($newdata);
+            
+            
 //            echo 'hello';
 //            
 //            print_r($this->session->userdata());die();
@@ -277,10 +333,131 @@ class BusinessThird extends CI_Controller {
 //            exit();
 //        }
 
-        $data = $this->input->post();
+
+        $prevousnfo = $this->session->userdata('businessThird2');
+
+        $data = $this->input->post(); 
         if(!empty($data)){
 //            echo '<pre>';
 //            print_r($data);
+
+
+
+              $order_id_number = $this->session->userdata('order_id_number');
+            
+            
+            $businessThird1 = $this->session->userdata('businessThird1');
+            
+            $unique_id = $businessThird1['unique_id'];
+            
+            
+            $first_base64_signature = $data['first_base64_signature'];
+            $second_base64_signature = $data['second_base64_signature'];
+            $third_base64_sign = $data['third_base64_signature'];
+            $req_gur_amt = $data['busineesThird_requested_gurantee_amt'];
+            $gur_period_month = $data['gur_period_month'];
+            $startDate = $data['startDate'];
+            $endDate = $data['endDate'];
+            $checkbox2 = $data['checkbox2'];
+            $checkbox1 = $data['checkbox1'];
+            $btn3_checkbox = $data['btn3_checkbox'];
+            $value_check = $data['value_check'];
+            
+            
+            
+             // first signature image start
+            define('UPLOAD_DIR', 'doc_sign/');
+              $img1 = $first_base64_signature;
+              
+              $img1 = str_replace('data:image/png;base64,', '', $img1);
+              $img1 = str_replace(' ', '+', $img1);
+              $data1 = base64_decode($img1);
+
+              $encoded_string1 = $img1;
+              $imgdata1 = base64_decode($encoded_string1);
+              $mimetype1 = $this->getImageMimeType($imgdata1);
+              // echo $imgdata; die();
+
+              $file1 = UPLOAD_DIR . uniqid() . '.'.$mimetype1;
+              // echo $file; die();
+              $success1 = file_put_contents($file1, $data1);
+
+              $first_signature_file = base_url().$file1;
+              // $file_path1 = "222";
+
+        // end
+
+
+        // second signature image start
+            define('UPLOAD_SECOND_DIR', 'doc_sign/');
+              $img2 = $second_base64_signature;
+              
+              $img2 = str_replace('data:image/png;base64,', '', $img2);
+              $img2 = str_replace(' ', '+', $img2);
+              $data2 = base64_decode($img2);
+
+              $encoded_string2 = $img2;
+              $imgdata2 = base64_decode($encoded_string2);
+              $mimetype2 = $this->getImageMimeType($imgdata2);
+              // echo $imgdata2; die();
+
+              $file2 = UPLOAD_SECOND_DIR . uniqid().rand() . '.'.$mimetype2;
+              // echo $file; die();
+              $success2 = file_put_contents($file2, $data2);
+
+              $second_signature_file = base_url().$file2;
+              // $file_path2 = "123";
+
+        // end
+              
+              // third signature image start
+            define('UPLOAD_THIRD_DIR', 'doc_sign/');
+              $img3 = $third_base64_sign;
+              
+              $img3 = str_replace('data:image/png;base64,', '', $img3);
+              $img3 = str_replace(' ', '+', $img3);
+              $data3 = base64_decode($img3);
+
+              $encoded_string3 = $img3;
+              $imgdata3 = base64_decode($encoded_string3);
+              $mimetype3 = $this->getImageMimeType($imgdata3);
+              // echo $imgdata2; die();
+
+              $file3 = UPLOAD_THIRD_DIR . uniqid().rand() . '.'.$mimetype3;
+              // echo $file; die();
+              $success3 = file_put_contents($file3, $data3);
+
+              $third_signature_file = base_url().$file3;
+              // $file_path2 = "123";
+
+        // end
+        
+        $req_gur_amt = str_replace(',', '', $req_gur_amt);
+            
+            $fields = array( "client_requested_amount__c" => $req_gur_amt, "client_first_signature_file__c" => $first_signature_file, "client_second_signature_file__c" => $second_signature_file,
+            "guarantee_period_start_date__c" => $startDate, "guarantee_period_end_date__c" => $endDate,
+            'order_id_number__c' => $order_id_number,'flow_number__c'=>5,'client_id_number'=>$unique_id,'Client__c'=>$prevousnfo['client_c']);
+            
+            
+            $url = 'https://obli-backend.herokuapp.com/webservices/newbusnessthirdordersupdate.php';
+
+              $request = sf_update_record($url,$fields,$prevousnfo['client_c']);
+             $request = json_decode($request);
+            
+             
+            //execute post
+           
+            $err = $request->errors;
+            
+            $data['error'] = 0;
+            
+            if(!empty($err)){
+                
+                $data['error'] = 1;
+            
+            }
+            
+            
             
             $newdata = array(
                 'businessThird3' => $data
@@ -379,6 +556,83 @@ class BusinessThird extends CI_Controller {
 
             } 
             // end
+            
+             $order_id_number = $this->session->userdata('order_id_number');
+            
+            
+            $businessThird1 = $this->session->userdata('businessThird1');
+            
+            $unique_id = $businessThird1['unique_id'];
+            
+            
+            $ant_first_name = $data['ant_first_name'];
+            $ant_last_name = $data['ant_last_name'];
+            $ant_unique_id = $data['ant_unique_id'];
+            $ant_client_add = $data['ant_client_add'];
+            $ant_client_phone = $data['ant_client_phone'];
+            $ant_client_phone = str_replace(["-"], '', $ant_client_phone);
+            $ant_client_email = $data['ant_client_email'];
+            $ant_client_gender = $data['ant_client_gender'];
+            $antsec_date_of_birth = strtr($data['antsec_date_of_birth'], '/', '-');
+            $antsec_date_of_birth = date('Y-m-d', strtotime($antsec_date_of_birth));
+            $ant_req_gur_amt = $data['ant_req_gur_amt'];
+            $ant_gur_period_month = $data['ant_gur_period_month'];
+            $antstartDate = strtr($data['antstartDate'], '/', '-');
+            $antstartDate = date('Y-m-d', strtotime($antstartDate));
+            $antendDate = strtr($data['antendDate'], '/', '-');
+            $antendDate = date('Y-m-d', strtotime($antendDate));
+            $another_user_file = $data['another_user_file'];
+            
+            if(!empty($antstartDate) && !empty($antendDate)){
+
+                $another_startDate = $antstartDate;
+                $another_endDate = $antendDate;
+
+                $an_ts1 = strtotime($another_startDate);
+                $an_ts2 = strtotime($another_endDate);
+
+                $an_year1 = date('Y', $an_ts1);
+                $an_year2 = date('Y', $an_ts2);
+
+                $an_month1 = date('m', $an_ts1);
+                $an_month2 = date('m', $an_ts2);
+
+                $an_diff = (($an_year2 - $an_year1) * 12) + ($an_month2 - $an_month1);
+
+                $ant_lease_period = $an_diff;
+
+            }
+            else{
+                $ant_lease_period = "";
+            }
+            
+            $prevousnfo = $this->session->userdata('businessThird2');
+            
+             $fields = array( "another_compnay_first_name__c" => $ant_first_name, "another_compnay_last_name__c" => $ant_last_name, "another_compnay_id__c" => $ant_unique_id,
+             "another_compnay_email__c" => $ant_client_email,
+             "another_compnay_phone__c" => $ant_client_phone, "another_compnay_address__c" => $ant_client_add, "client_requested_amount__c" => $ant_req_gur_amt, "another_comp_gender__c" => $ant_client_gender,
+             "another_compnay_date_birth__c" => $antsec_date_of_birth, "another_compnay_period_month__c" => $ant_lease_period, "another_compnay_file__c" => $another_user_file,
+             "another_guarantee_period_start_date__c" => $antstartDate, "another_guarantee_period_end_date__c" => $antendDate,
+             'order_id_number__c' => $order_id_number,'client_id_number'=>$unique_id,'Client__c'=>$prevousnfo['client_c']);
+            
+            $url = 'https://obli-backend.herokuapp.com/webservices/newbusnessthirdordersupdate.php';
+
+              $request = sf_update_record($url,$fields,$prevousnfo['client_c']);
+             $request = json_decode($request);
+            
+             
+            //execute post
+           
+            $err = $request->errors;
+            
+            $data['error'] = 0;
+            
+            if(!empty($err)){
+                
+                $data['error'] = 1;
+            
+            }
+            
             
             $newdata = array(
                 'businessThird4' => $data
@@ -496,6 +750,47 @@ class BusinessThird extends CI_Controller {
 
             } 
             // end
+            
+            $order_id_number = $this->session->userdata('order_id_number');
+            
+            
+            $businessThird1 = $this->session->userdata('businessThird1');
+            
+            $unique_id = $businessThird1['unique_id'];
+            
+            $prevousnfo = $this->session->userdata('businessThird2');
+            
+            
+            $property_owner_name = $data['property_owner_name'];
+            $owner_of_property = $data['owner_of_property'];
+            $property_owner_phone = $data['property_owner_phone'];
+            $property_owner_phone = str_replace(["-"], '', $property_owner_phone);
+            $property_owner_of_email = $data['property_owner_of_email'];
+            $property_address = $data['property_address'];
+            
+             $fields = array( "another_compnay_first_name__c" => $property_owner_name, "another_compnay_id__c" => $owner_of_property,
+             "another_compnay_email__c" => $property_owner_of_email,
+             "another_compnay_phone__c" => $property_owner_phone, "another_compnay_address__c" => $property_address, "another_compnay_file__c" => $data['gr_company_file'], 'order_id_number__c' => $order_id_number,'client_id_number'=>$unique_id,'Client__c'=>$prevousnfo['client_c']);
+            
+            $url = 'https://obli-backend.herokuapp.com/webservices/newbusnessthirdordersupdate.php';
+
+              $request = sf_update_record($url,$fields,$prevousnfo['client_c']);
+             $request = json_decode($request);
+            
+             
+            //execute post
+           
+            $err = $request->errors;
+            
+            $data['error'] = 0;
+            
+            if(!empty($err)){
+                
+                $data['error'] = 1;
+            
+            }
+            
+            
             $newdata = array(
                 'businessThird5' => $data
             );
@@ -945,6 +1240,48 @@ class BusinessThird extends CI_Controller {
                
             } 
             // six end
+            
+            
+            $order_id_number = $this->session->userdata('order_id_number');
+            
+            
+            $businessThird1 = $this->session->userdata('businessThird1');
+            
+            $unique_id = $businessThird1['unique_id'];
+            
+            $prevousnfo = $this->session->userdata('businessThird2');
+            
+            
+            $gurantee_articles_of_association = $data['gurantee_articles_of_association'];
+            $gurantee_certificate = $data['gurantee_certificate'];
+            $gurantee_exemption_withholding_tax = $data['gurantee_exemption_withholding_tax'];
+            $gurantee_bookkeeping_authorization = $data['gurantee_bookkeeping_authorization'];
+            $gurantee_oval_attorney = $data['gurantee_oval_attorney'];
+            $gurantee_direct_debit_authorization = $data['gurantee_direct_debit_authorization'];
+            
+            
+            $fields = array( "gurantee_articles_of_association_file__c" => $gurantee_articles_of_association, "gurantee_certificate_file__c" => $gurantee_certificate,
+            "gurantee_exemption_withholding_tax_file__c" => $gurantee_exemption_withholding_tax, "gurantee_bookkeeping_authorization_file__c" => $gurantee_bookkeeping_authorization,
+            "gurantee_oval_attorney_file__c" => $gurantee_oval_attorney, "gurantee_direct_debit_authorization_file__c" => $gurantee_direct_debit_authorization, 'order_id_number__c' => $order_id_number,'client_id_number'=>$unique_id,
+            'Client__c'=>$prevousnfo['client_c']);
+            
+            $url = 'https://obli-backend.herokuapp.com/webservices/newbusnessthirdordersupdate.php';
+
+              $request = sf_update_record($url,$fields,$prevousnfo['client_c']);
+             $request = json_decode($request);
+            
+             
+            //execute post
+           
+            $err = $request->errors;
+            
+            $data['error'] = 0;
+            
+            if(!empty($err)){
+                
+                $data['error'] = 1;
+            
+            }
 
             $newdata = array(
                 'businessThird7' => $data
@@ -1121,6 +1458,10 @@ class BusinessThird extends CI_Controller {
             $business_type = $businessThird2['business_type'];
             $company_id = $businessThird2['company_id'];
             $company_address = $businessThird2['company_address'];
+            
+            $Area__c = $businessThird2['Area__c'];
+            $Business_Field__c = $businessThird2['Business_Field__c'];
+            
             $contact_person_name = $businessThird2['contact_person_name'];
             $contact_person_email = $businessThird2['contact_person_email'];
             $contact_person_phone = $businessThird2['contact_person_phone'];
@@ -2222,7 +2563,10 @@ class BusinessThird extends CI_Controller {
                  $business_text_eng = 'licensed dealer';
             }
             
-            $fields = array("client_id_number" => $unique_id, "guarantee_type" => $guarantee_type, "preferred_route" => $preferred_route, "client_first_name" => $first_name, "client_last_name" => $last_name, "guarantee_period_month" => $gur_period_month, "requested_amount" => $req_gur_amt, "first_signature_file" => $first_signature_file, "second_signature_file" => $second_signature_file, "amt_company_name" => $company_name, "amt_company_address" => $company_address, "amt_company_id" => $company_id, "amt_company_business_type" => $business_text_eng, "amt_company_contact_person_email" => $contact_person_email, "amt_company_contact_person_name" => $contact_person_name, "amt_company_contact_person_phone" => $contact_person_phone, "ant_first_name" => $ant_first_name, "ant_last_name" => $ant_last_name, "ant_unique_id" => $ant_unique_id, "ant_client_email" => $ant_client_email, "ant_client_phone" => $ant_client_phone, "ant_client_add" => $ant_client_add, "ant_req_gur_amt" => $ant_req_gur_amt, "ant_client_gender" => $ant_client_gender, "ant_account_birth_date" => $antsec_date_of_birth, "ant_lease_period" => $ant_lease_period, "ant_client_file" => $ant_client_file, "gr_company_name" => $b7_company_name, "gr_company_address" => $b7_company_address, "gr_company_email" => $company_email, "user_pdf" => $user_pdf, "gr_company_phone" => $company_telephone, "gr_company_url" => $gr_company_url, "gurantee_articles_of_association" => $gurantee_articles_of_association, "gurantee_certificate" => $gurantee_certificate, "gurantee_exemption_withholding_tax" => $gurantee_exemption_withholding_tax, "gurantee_bookkeeping_authorization" => $gurantee_bookkeeping_authorization, "gurantee_oval_attorney" => $gurantee_oval_attorney, "user_link" => $user_link, "first_document" => $first_document, "second_document" => $second_document, "b7_company_id" => $b7_company_id, "b7_contact_id" => $b7_contact_id, "guarantee_period_start_date" => $startDate, "guarantee_period_end_date" => $endDate, "another_guarantee_period_start_date" => $antstartDate, "another_guarantee_period_end_date" => $antendDate, "gurantee_direct_debit_authorization" => $gurantee_direct_debit_authorization, "property_owner_name" => $property_owner_name, "owner_of_property" => $owner_of_property, "property_owner_phone" => $property_owner_phone, "property_owner_of_email" => $property_owner_of_email, "property_address" => $property_address,"gr_other_company_name"=>$b7_other_company_name, 'order_id_number' => $order_id_number,"house_rent_document"=>$house_rent_document,'tuplier_dradit' => $tuplier_dradit );
+            $Area__c = $businessThird2['Area__c'];
+            $Business_Field__c = $businessThird2['Business_Field__c'];
+            
+            /*$fields = array("Business_Field__c"=>$Business_Field__c,"Area__c"=>$Area__c,"client_id_number" => $unique_id, "guarantee_type" => $guarantee_type, "preferred_route" => $preferred_route, "client_first_name" => $first_name, "client_last_name" => $last_name, "guarantee_period_month" => $gur_period_month, "requested_amount" => $req_gur_amt, "first_signature_file" => $first_signature_file, "second_signature_file" => $second_signature_file, "amt_company_name" => $company_name, "amt_company_address" => $company_address, "amt_company_id" => $company_id, "amt_company_business_type" => $business_text_eng, "amt_company_contact_person_email" => $contact_person_email, "amt_company_contact_person_name" => $contact_person_name, "amt_company_contact_person_phone" => $contact_person_phone, "ant_first_name" => $ant_first_name, "ant_last_name" => $ant_last_name, "ant_unique_id" => $ant_unique_id, "ant_client_email" => $ant_client_email, "ant_client_phone" => $ant_client_phone, "ant_client_add" => $ant_client_add, "ant_req_gur_amt" => $ant_req_gur_amt, "ant_client_gender" => $ant_client_gender, "ant_account_birth_date" => $antsec_date_of_birth, "ant_lease_period" => $ant_lease_period, "ant_client_file" => $ant_client_file, "gr_company_name" => $b7_company_name, "gr_company_address" => $b7_company_address, "gr_company_email" => $company_email, "user_pdf" => $user_pdf, "gr_company_phone" => $company_telephone, "gr_company_url" => $gr_company_url, "gurantee_articles_of_association" => $gurantee_articles_of_association, "gurantee_certificate" => $gurantee_certificate, "gurantee_exemption_withholding_tax" => $gurantee_exemption_withholding_tax, "gurantee_bookkeeping_authorization" => $gurantee_bookkeeping_authorization, "gurantee_oval_attorney" => $gurantee_oval_attorney, "user_link" => $user_link, "first_document" => $first_document, "second_document" => $second_document, "b7_company_id" => $b7_company_id, "b7_contact_id" => $b7_contact_id, "guarantee_period_start_date" => $startDate, "guarantee_period_end_date" => $endDate, "another_guarantee_period_start_date" => $antstartDate, "another_guarantee_period_end_date" => $antendDate, "gurantee_direct_debit_authorization" => $gurantee_direct_debit_authorization, "property_owner_name" => $property_owner_name, "owner_of_property" => $owner_of_property, "property_owner_phone" => $property_owner_phone, "property_owner_of_email" => $property_owner_of_email, "property_address" => $property_address,"gr_other_company_name"=>$b7_other_company_name, 'order_id_number' => $order_id_number,"house_rent_document"=>$house_rent_document,'tuplier_dradit' => $tuplier_dradit );
 
 //             echo "<pre>"; print_r($fields); 
 //             die();
@@ -2233,7 +2577,7 @@ class BusinessThird extends CI_Controller {
 
             //open connection
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+           curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             //set the url, number of POST vars, POST data
             curl_setopt($ch,CURLOPT_URL, $url);
@@ -2248,8 +2592,8 @@ class BusinessThird extends CI_Controller {
             //close connection
             curl_close($ch);
             
-
-            if($err){
+*/
+            /*if($err){
 //                 echo $err;die();
                 $session_array = array( 'businessThird2', 'businessThird3', 'businessThird4', 'businessThird5', 'businessThird6', 'businessThird7');
                 $this->session->unset_userdata($session_array);
@@ -2294,19 +2638,20 @@ class BusinessThird extends CI_Controller {
                                         echo "<script type='text/javascript'>alert('Your record successfully saved!');window.location.href = '".site_url('businessThird8')."';</script>";
                                         return FALSE;
 
-                                    }else{
+                                    }else{*/
                                         
                                         $session_array = array('business1', 'business2', 'businessThird2', 'businessThird3', 'businessThird4', 'businessThird5', 'businessThird6', 'businessThird7');
-                                        $this->session->unset_userdata($session_array);
-                                        echo "<script type='text/javascript'>alert('Your record successfully saved!');window.location.href = '".site_url('businessThirdPaymentPage')."';</script>";
-                                        return FALSE;
-                                    }
+                            $this->session->unset_userdata($session_array);
+                            echo "<script type='text/javascript'>alert('Your record successfully saved!'); window.location.href = '".site_url('business1')."'; </script>";
+//                            redirect('business1');
+                            return FALSE;
+                                   /* }
                                 }
                                 else{
                                     
                                     $session_array = array('business1', 'business2', 'businessThird2', 'businessThird3', 'businessThird4', 'businessThird5', 'businessThird6', 'businessThird7');
                                     $this->session->unset_userdata($session_array);
-                                    redirect('business1');
+                                    
                                 }
 
                             }
@@ -2334,7 +2679,7 @@ class BusinessThird extends CI_Controller {
 //                 print_r($orderData->status);
 //                 print_r($orderData); die();
                  
-            }
+            }*/
             
             /* API : End */
         

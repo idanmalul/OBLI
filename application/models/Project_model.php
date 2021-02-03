@@ -21,7 +21,13 @@ class Project_model extends CI_Model {
             
             return $result;
         }
-        
+
+        public function get_query_create_table_result($sql)
+        {
+            $query = $this->db->query($sql);
+            return $query;
+        }
+
         public function get_records($table) {
             $result = array();
             $query = $this->db->get($table);

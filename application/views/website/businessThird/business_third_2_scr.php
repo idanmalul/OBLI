@@ -109,9 +109,28 @@ return datepicker.regional.he;
             }, 'אנא הזן כתובת דוא"ל תקנית');
             // end
 
-            $('#company_name,#company_id,#company_address,#contact_person_name,#contact_person_email,#contact_person_phone').on('keyup', function() {
+            $('#Area__c,#Business_Field__c,#company_name,#company_id,#company_address,#contact_person_name,#contact_person_email,#contact_person_phone').on('keyup', function() {
 
-                if($("#company_name").val() != '' && $("#company_id").val() != '' && $("#company_address").val() != '' && $("#contact_person_name").val() != ''  && $("#contact_person_email").val() != '' && $("#contact_person_phone").val() != '' ){
+                if($("#Area__c").val() != '' && $("#Business_Field__c").val() != '' && $("#company_name").val() != '' && $("#company_id").val() != '' && $("#company_address").val() != '' && $("#contact_person_name").val() != ''  && $("#contact_person_email").val() != '' && $("#contact_person_phone").val() != '' ){
+
+                    $("#businessThird_2_form").css("opacity","1"); // button opacity change
+                    $("#businessThird_2_form").css("cursor","pointer");
+                    $('#businessThird_2_form').prop('disabled', false);
+
+                }
+                else{
+                    $("#businessThird_2_form").css("opacity","0.5"); 
+                    $("#businessThird_2_form").css("cursor","auto");
+                    $('#businessThird_2_form').prop('disabled', true);
+                }
+
+              
+            });
+            
+            
+            $('#Area__c,#Business_Field__c').on('change', function() {
+
+                if($("#Area__c").val() != '' && $("#Business_Field__c").val() != '' && $("#company_name").val() != '' && $("#company_id").val() != '' && $("#company_address").val() != '' && $("#contact_person_name").val() != ''  && $("#contact_person_email").val() != '' && $("#contact_person_phone").val() != '' ){
 
                     $("#businessThird_2_form").css("opacity","1"); // button opacity change
                     $("#businessThird_2_form").css("cursor","pointer");
@@ -162,7 +181,15 @@ return datepicker.regional.he;
                             contact_person_email: {
                                 required: true,
                                 customemail: true
-                            },                            
+                            },
+                            Area__c: {
+                                
+                                required: true,
+                            },
+                            Business_Field__c: {
+                                
+                                required: true,
+                            },
                         },
                         messages: {
                             company_name: {
@@ -185,6 +212,12 @@ return datepicker.regional.he;
                                 required: "שדה חובה",
                                 customemail: 'אנא הזן כתובת דוא"ל תקנית.'
                             },
+                            Area__c: {
+                                required: "שדה חובה"
+                            },
+                            Business_Field__c: {
+                                required: "שדה חובה"
+                            },
                         }
                         
                     });
@@ -201,7 +234,7 @@ return datepicker.regional.he;
                         $('#businessThird_2_form').prop('disabled', true);
                     }
 
-                if($("#company_name").val() != '' && $("#company_id").val() != '' && $("#company_address").val() != '' && $("#contact_person_name").val() != ''  && $("#contact_person_email").val() != '' && $("#contact_person_phone").val() != '' ){
+                if($("#Area__c").val() != '' && $("#Business_Field__c").val() != '' && $("#company_name").val() != '' && $("#company_id").val() != '' && $("#company_address").val() != '' && $("#contact_person_name").val() != ''  && $("#contact_person_email").val() != '' && $("#contact_person_phone").val() != '' ){
 
                     $("#businessThird_2_form").css("opacity","1"); 
                     $("#businessThird_2_form").css("cursor","pointer");
@@ -365,7 +398,7 @@ return datepicker.regional.he;
                               </font></label>
                             </div>
                         </li>
-
+                        
                         <li class="gf_left_third gfield text-field1_application form-group">
                           
                             <div class="styled-input wide">
@@ -374,13 +407,105 @@ return datepicker.regional.he;
                             </label>
                             </div>
                         </li>
-                    
+                        
+                        </ul>
+                        
+                    <ul class="gform_fields top_label " style='display:inline-block !important;'>
+                        
+                        <li class="gf_middle_third gfield text-field2_application form-group" style='margin-left:0px !important; margin-right:0px !mportant; float:right;'>
+                          
+
+                            <div class="styled-input wide">
+                                <select class='form-control' name='Area__c' id="Area__c" style='font-size: 18px !important; border-radius:0px !important;  opacity:1 !important; color:#323474 !important;'> 
+                                  
+                                   <option value=''> 
+                                     אזור גיאוגרפי
+                                   </option>
+                                   
+                                   <option value='Tel Aviv'> 
+                                     תל אביב
+                                   </option>
+                                   
+                                   <option value='Center'> 
+                                     מרכז
+                                   </option>
+                                   
+                                   <option value='Jerusalem'> 
+                                     ירושלים
+                                   </option>
+                                   
+                                   <option value='South'> 
+                                     דרום
+                                   </option>
+                                   
+                                   <option value='Haifa'> 
+                                     חיפה
+                                   </option>
+                                   
+                                   <option value='North'> 
+                                     צפון
+                                   </option>
+                                   
+                                   <option value='Judea and Samaria Area'> 
+                                     יו"ש
+                                   </option>
+                                   
+                               </select>
+                                
+                            </div>
+                        </li>
+                        
+                        <li class="gfield gf_left_third text-field2_application form-group">
+                           
+
+                            <div class="styled-input wide">
+                               
+                               <select class='form-control mail_contact_left' name='Business_Field__c' id="Business_Field__c" style='font-size: 18px !important; border-radius:0px !important; color:#323474 !important; opacity:1 !important;'>
+                                   
+                                   <option value=''> 
+                                      סוג בית העסק
+                                   </option>
+                                   
+                                   <option value='Store'> 
+                                     חנות
+                                   </option>
+                                   
+                                   <option value='Office without reception'> 
+                                     משרדים ללא קהל
+                                   </option>
+                                   
+                                   <option value='Office with reception'> 
+                                    משרדים עם קהל
+                                   </option>
+                                   
+                                   <option value='Restaurants'> 
+                                     מסעדנות
+                                   </option>
+                                   
+                                   <option value='Production/ storage facility'> 
+                                     מתקן ייצור / איחסון
+                                   </option>
+                                   
+                                   <option value='Entertainment'> 
+                                     בילוי
+                                   </option>
+                                   
+                                   <option value='Other'> 
+                                    אחר
+                                   </option>
+                                   
+                               </select>
+                               
+                               
+                            </div>
+                        </li>
+                        
 
                     </ul>
 
 
 
-                   <div class="row" style="margin-top: 140px;">
+                   <div class="row" style="margin-top: 40px;">
                         <div class="col-md-3 col-sm-3"></div>
                         <div class="col-md-6 col-sm-6">
                         

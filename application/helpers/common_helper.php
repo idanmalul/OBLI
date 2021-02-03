@@ -136,6 +136,74 @@ if(!function_exists('get_slider_by_set_order'))
      }   
  }
 
+//<--------- SF insert/update into proper way ------------->>//
+ 
+ if(!function_exists('sf_register_record'))
+ {
+     function sf_register_record($url,$data='')
+     {	
+         
+         
+          $ch = curl_init();
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            //set the url, number of POST vars, POST data
+            curl_setopt($ch,CURLOPT_URL, $url);
+            curl_setopt($ch,CURLOPT_POST, true);
+            curl_setopt($ch,CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            
+
+            //execute post
+            $result = curl_exec($ch);
+            $err = curl_error($ch);
+            //close connection
+            curl_close($ch);
+            
+           $result = json_decode($result);
+            
+            $post = array('status'=>'success','response'=>$result,'errors'=>$err,'client_c'=>$result->client_c);
+            
+           return json_encode($post);
+
+     }   
+ }
+ 
+ 
+ if(!function_exists('sf_update_record'))
+ {
+     function sf_update_record($url,$data='',$id)
+     {	
+         
+        $ch = curl_init();
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            //set the url, number of POST vars, POST data
+            curl_setopt($ch,CURLOPT_URL, $url);
+            curl_setopt($ch,CURLOPT_POST, true);
+            curl_setopt($ch,CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            
+
+            //execute post
+            $result = curl_exec($ch);
+            $err = curl_error($ch);
+            //close connection
+            curl_close($ch);
+            
+           $result = json_decode($result);
+            
+            $post = array('status'=>'success','response'=>$result,'errors'=>$err);
+            
+           return json_encode($post);
+     }   
+ }
+
+
+//<--------- END of Sales Force insert/update------------->>//
+
+
+
 // if(!function_exists('get_all_partner'))
 // {
 //     function get_all_partner()
