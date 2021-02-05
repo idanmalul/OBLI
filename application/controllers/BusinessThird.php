@@ -264,10 +264,25 @@ class BusinessThird extends CI_Controller {
             
             $unique_id = $businessThird1['unique_id'];
             
+            $business_type = $data['business_type'];
+             
+            if($business_type == 'חברה בע”מ'){
+                
+                $business_text_eng = 'business ltd';
+                
+            }else{
+                 $business_text_eng = 'licensed dealer';
+            }
+            
+            $first_name = $businessThird1['first_name'];
+            $last_name = $businessThird1['last_name'];
+            
             $fields = array("Business_Field__c"=>$Business_Field__c,"Area__c"=>$Area__c,"amt_company_name__c" => $company_name,
             "amt_company_address__c" => $company_address, "amt_company_id__c" => $company_id, "amt_company_business_type__c" => $business_text_eng,
             "amt_company_contact_person_email__c" => $contact_person_email, "amt_company_contact_person_name__c" => $contact_person_name, 
-            "amt_company_contact_person_phone__c" => $contact_person_phone,'order_id_number__c' => $order_id_number,'flow_number__c'=>5,'client_id_number'=>$unique_id);
+            "amt_company_contact_person_phone__c" => $contact_person_phone,'order_id_number__c' => $order_id_number,'flow_number__c'=>5,'client_id_number'=>$unique_id,
+            'ref_client_id__c'=>$unique_id,'amt_company_business_type__c'=>$business_text_eng,'form_type_in_text__c'=>'Business','client_first_name__c'=>$first_name,
+            'client_last_name__c'=>$last_name,'flow_type__c'=>1,'form_type__c'=>3);
 
 //             echo "<pre>"; print_r($fields); 
 //             die();
@@ -433,6 +448,12 @@ class BusinessThird extends CI_Controller {
         // end
         
         $req_gur_amt = str_replace(',', '', $req_gur_amt);
+        
+        $flow_type = '1';
+        
+        if($req_gur_amt > 50000){
+            $flow_type = '2';
+        }
             
             $fields = array( "client_requested_amount__c" => $req_gur_amt, "client_first_signature_file__c" => $first_signature_file, "client_second_signature_file__c" => $second_signature_file,
             "guarantee_period_start_date__c" => $startDate, "guarantee_period_end_date__c" => $endDate,
