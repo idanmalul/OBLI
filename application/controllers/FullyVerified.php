@@ -29,11 +29,11 @@ class FullyVerified extends CI_Controller {
         ){
             $insert_data = array(
                 'last_name' => $user_data['private2']['last_name'],
-                'first_name' => $user_data['private2']['last_name'],
+                'first_name' => $user_data['private2']['first_name'],
                 'id_number' => $user_data['private2']['unique_id'],
                 'status' => 'pending',
-                'verified' => 0
-
+                'verified' => 0,
+                'send_data_sf' => 0,
             );
             $verified_id = $this->project_model->insert_data('verified_persons', $insert_data);
             $result = $this->create_verification($verified_id, $user_data['private2']['client_email']);
@@ -45,6 +45,7 @@ class FullyVerified extends CI_Controller {
             $url = parse_url($result->url);
             $data_kyc['auth_url'] = str_replace('link=', '', $url['query']);
             $data_kyc['verified_id'] = $verified_id;
+            $this->session->set_userdata('verified_id_redirect',$verified_id);
             $this->load->view('website/header');
             $this->load->view('kyc/kyc', $data_kyc);
             $this->load->view('website/footer', $data);
@@ -64,7 +65,15 @@ class FullyVerified extends CI_Controller {
                     status varchar(255) NOT NULL,           
                     verified TINYINT(1) NOT NULL,
                     case_id varchar(255) NULL,
-                    verification_hash varchar(255) NULL   
+                    verification_hash varchar(255) NULL,
+                    data_hash longtext NULL,
+                    send_data_sf int NULL,
+                    sf_result longtext NULL,
+                    verification_image_one varchar(255) NULL,
+                    verification_image_two varchar(255) NULL,
+                    verification_image_three varchar(255) NULL,
+                    verification_image_four varchar(255) NULL,
+                    verification_video varchar(255) NULL
                 );";
         $this->project_model->get_query_create_table_result($sql);
     }
@@ -84,7 +93,103 @@ class FullyVerified extends CI_Controller {
         echo 0;
     }
 
+//  run for cron php index.php FullyVerified get_files
+    public function get_files(){
+        $sql = "SELECT * FROM verified_persons WHERE data_hash IS NOT NULL AND send_data_sf = 0";
+        $result = $this->project_model->get_query_result($sql);
+        foreach ($result as $val){
+            $data = json_decode(base64_decode($val->data_hash));
+            $data_images = $data->images;
+            $data_video = $data->video;
+            $data_urls = array();
+            $data_obli_urls = array();
+            foreach ($data_images as $value) {
+                $data_urls[] = $value->screen->url;
+            }
+
+            foreach ($data_video as $value){
+                $data_urls[] = $value->url;
+            }
+
+
+            foreach ($data_urls as $url){
+                $parse_name = explode("/", $url);
+                $name = end($parse_name);
+                $data_obli_urls[] = base_url().'uploads/kyc/'.$name;
+                $token = $this->get_jwt_token();
+                $headers = array(
+                    "Authorization: Bearer {$token}"
+                );
+                $fp = fopen('uploads/kyc/'.$name, 'w+');
+
+                $ch = curl_init(str_replace(" ","%20", $url));
+                curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+                curl_setopt($ch, CURLOPT_FILE, $fp);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                $output = curl_exec($ch);
+                curl_close($ch);
+                fclose($fp);
+            }
+            if(count($data_obli_urls)>4){
+                $data = array(
+                    'verification_image_one' => $data_obli_urls[0],
+                    'verification_image_two' => $data_obli_urls[1],
+                    'verification_image_three' => $data_obli_urls[2],
+                    'verification_image_four' => $data_obli_urls[3],
+                    'verification_video' => $data_obli_urls[4],
+                );
+            }else{
+                $data = array(
+                    'verification_image_one' => $data_obli_urls[0],
+                    'verification_image_two' => $data_obli_urls[1],
+                    'verification_image_three' => $data_obli_urls[2],
+                    'verification_image_four' => '',
+                    'verification_video' => $data_obli_urls[3],
+                );
+            }
+            $where = array('id' => $val->ID);
+            $this->project_model->update_data('verified_persons', $data, $where);
+
+            $data['client_id_number'] = $val->id_number;
+            $this->send_kyc_data_to_sf($data, $val->ID);
+        }
+        return true;
+    }
+    private function send_kyc_data_to_sf($data, $id){
+        // salesforce api
+        $url = 'https://obli-backend.herokuapp.com/webservices/kycSaveData.php';
+
+        //open connection
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_POST, true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+
+        //execute post
+        $res = curl_exec($ch);
+        $err = curl_error($ch);
+        $result = json_decode($res);
+        //close connection
+        curl_close($ch);
+        $where = array('id' => $id);
+        if(isset($result->status) && $result->status == true){
+            $data_update = array('sf_result'=> $res, 'send_data_sf'=>1);
+        }else{
+            $data_update = array('sf_result'=> $res, 'send_data_sf'=>2);
+        }
+        $this->project_model->update_data('verified_persons', $data_update, $where);
+
+        return $result;
+    }
     public function get_verification_data(){
+        $this->get_data_package();
+        return true;
         $id = $this->input->get("verified_id");
         if(isset($id) && $id!=null){
             $ch = array("id" => $id);
@@ -118,23 +223,17 @@ class FullyVerified extends CI_Controller {
             }
 
         }
-//        echo 0;
-
     }
 
     public function set_verification_status(){
         $data = json_decode(file_get_contents('php://input'), true);
-        $this->save_request($data, 'status-input');
-        $this->save_request($_REQUEST, 'status-request');
+        $this->save_request($data, 'status-request');
         if(isset($data['customer_case_id']) && $data['customer_case_id']!=null){
             $status = $data["status"];
             $id = str_replace('customer_', '', $data['customer_case_id']);
             $verified = 0;
             if($status == 'verified-status'){
                 $verified = 1;
-                $ch = array("id" => $id );
-                $rec = $this->project_model->get_data_where_condition('verified_persons', $ch);
-                $this->get_data_package($rec[0]->verification_hash);
             }
             $data = array(
                 'status' => $status,
@@ -144,57 +243,65 @@ class FullyVerified extends CI_Controller {
             $where = array('id' => $id);
             $edit = $this->project_model->update_data('verified_persons', $data, $where);
         }
-
         echo json_encode(1);
     }
 
-    private function get_data_package($hash){
-        $data = http_build_query(array(
-            'email' => $this->config->item('fully_customer_email'),
-            'password' => $this->config->item('fully_customer_password'),
-            'verification_hash' => $hash,
-            'customer_secret' => $this->config->item('fully_customer_secret_key')
-        ));
+    private function get_data_package(){
+        $sql = "SELECT * FROM verified_persons WHERE status = 'media-remote-ready'";
+        $result = $this->project_model->get_query_result($sql);
+        foreach ($result as $val){
+            $token = $this->get_jwt_token();
+            $url = $this->config->item('fully_verified_url').'/customers/api/verify/';
+            $signature = $this->calculate_signature($this->config->item('fully_verification_secret_key'), 'customer_3', $url );
+            $headers = array(
+                "Authorization: Bearer {$token}",
+            );
+            $data = http_build_query(array(
+                'email' => $this->config->item('fully_customer_email'),
+                'password' => $this->config->item('fully_customer_password'),
+                'verification_hash' => $val->verification_hash,
+                'customer_secret' => $this->config->item('fully_customer_secret_key')
+            ));
 
-        $curl = curl_init();
+            $curl = curl_init();
 
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->config->item('fully_verified_url').'/customers/api/verification-data-package/',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 5000,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => $data,
-        ));
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $this->config->item('fully_verified_url').'/customers/api/verification-data-package/',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 5000,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => $data,
+                CURLOPT_HTTPHEADER => $headers,
+            ));
 
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-        curl_close($curl);
-        if($err){
-            // todo check with Idan
-            return false;
-        }else{
-            $data = json_decode($response);
-            return $data;
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+            curl_close($curl);
+            var_dump($response);
+            var_dump($err);
+            if($err){
+                // todo check with Idan
+
+                return false;
+            }else{
+
+                $data = json_decode($response);
+                return $data;
+            }
         }
+        return true;
     }
+
     private function save_request($data, $file_name){
         $request = json_encode($data);
-        if(file_exists("uploads/$file_name.json")){
-            $file_name = $file_name.date('H:i:s');
-            $fp = fopen("uploads/$file_name.json", 'w');
-            fwrite($fp, $request);   // here it will print the array pretty
-            fclose($fp);
-        }else{
-            $fp = fopen("uploads/$file_name.json", 'w');
-            fwrite($fp, $request);   // here it will print the array pretty
-            fclose($fp);
-        }
-
+        $fp = fopen("uploads/$file_name.json", 'w');
+        fwrite($fp, $request);   // here it will print the array pretty
+        fclose($fp);
         return true;
     }
     private function get_jwt_token(){
@@ -236,7 +343,7 @@ class FullyVerified extends CI_Controller {
             $url = $this->config->item('fully_verified_url').'/customers/api/verify/';
             $data = http_build_query(array(
                 'customer' => $this->config->item('fully_customer_name'),
-                'customer_callback_url' => $this->config->item('fully_customer_callback_url'),
+                'customer_callback_url' => $this->config->item('fully_customer_callback_url').'/kyc-redirect',
                 'customer_ext_id' => 'customer_'.$verified_id,
                 'customer_data_url' => $this->config->item('fully_customer_callback_url').'/verification-data/?verified_id='.$verified_id,
                 'customer_status_url' => $this->config->item('fully_customer_callback_url').'/verification-status',
@@ -285,4 +392,22 @@ class FullyVerified extends CI_Controller {
         return hash("sha256", $pre_signature, false);
     }
 
+    public function kyc_redirect(){
+        $sql3 = "SELECT * FROM menu_section where status = 1";
+        $data['menu_details'] = $this->project_model->get_query_result($sql3);
+        $sql4 = "SELECT * FROM icons_section where status = 1";
+        $data['icons_details'] = $this->project_model->get_query_result($sql4);
+
+        $sql5 = "SELECT * FROM application_url_section ORDER BY id DESC LIMIT 1";
+        $data['application_url_details'] = $this->project_model->get_query_result($sql5);
+
+        $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
+        $data['logo_details'] = $this->project_model->get_query_result($sql6);
+        $user_data = $this->session->userdata();
+        $data_kyc['verified_id'] = $user_data['verified_id_redirect'];
+
+        $this->load->view('website/header');
+        $this->load->view('kyc/redirect', $data_kyc);
+        $this->load->view('website/footer', $data);
+    }
 }

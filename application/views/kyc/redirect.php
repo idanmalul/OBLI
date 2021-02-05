@@ -1,4 +1,9 @@
+<style>
+    #content {height: 50%; margin-top: 10%; margin-bottom: 20%;}
+</style>
+
 <div id="content" data-id="<?php echo $verified_id;?>">Waiting KYC status...</div>
+
 <script>
     function check_status(){
         let id =$('#content').data('id');
