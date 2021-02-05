@@ -188,8 +188,6 @@ class FullyVerified extends CI_Controller {
         return $result;
     }
     public function get_verification_data(){
-        $this->get_data_package();
-        return true;
         $id = $this->input->get("verified_id");
         if(isset($id) && $id!=null){
             $ch = array("id" => $id);
