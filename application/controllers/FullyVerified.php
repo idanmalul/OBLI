@@ -93,7 +93,7 @@ class FullyVerified extends CI_Controller {
         echo 0;
     }
 
-//  run for cron php index.php FullyVerified get_files
+//  run for cron php /home/oblico/public_html/index.php FullyVerified get_files
     public function get_files(){
         $sql = "SELECT * FROM verified_persons WHERE data_hash IS NOT NULL AND send_data_sf = 0";
         $result = $this->project_model->get_query_result($sql);
@@ -103,19 +103,21 @@ class FullyVerified extends CI_Controller {
             $data_video = $data->video;
             $data_urls = array();
             $data_obli_urls = array();
+            $i=1;
             foreach ($data_images as $value) {
-                $data_urls[] = $value->screen->url;
+                $data_urls['verification_image_'.$i] = $value->screen->url;
+                $i+=1;
             }
 
             foreach ($data_video as $value){
-                $data_urls[] = $value->url;
+                $data_urls['verification_video'] = $value->url;
             }
 
 
-            foreach ($data_urls as $url){
+            foreach ($data_urls as $key=>$url){
                 $parse_name = explode("/", $url);
                 $name = end($parse_name);
-                $data_obli_urls[] = base_url().'uploads/kyc/'.$name;
+                $data_obli_urls[$key] = $this->config->item('fully_api_url').'/uploads/kyc/'.$name;
                 $token = $this->get_jwt_token();
                 $headers = array(
                     "Authorization: Bearer {$token}"
@@ -133,19 +135,19 @@ class FullyVerified extends CI_Controller {
             }
             if(count($data_obli_urls)>4){
                 $data = array(
-                    'verification_image_one' => $data_obli_urls[0],
-                    'verification_image_two' => $data_obli_urls[1],
-                    'verification_image_three' => $data_obli_urls[2],
-                    'verification_image_four' => $data_obli_urls[3],
-                    'verification_video' => $data_obli_urls[4],
+                    'verification_image_one' => isset($data_obli_urls['verification_image_1']) ? $data_obli_urls['verification_image_1']: null,
+                    'verification_image_two' => isset($data_obli_urls['verification_image_2']) ? $data_obli_urls['verification_image_2']: null,
+                    'verification_image_three' => isset($data_obli_urls['verification_image_3']) ? $data_obli_urls['verification_image_3']: null,
+                    'verification_image_four' => isset($data_obli_urls['verification_image_4']) ? $data_obli_urls['verification_image_4']: null,
+                    'verification_video' => isset($data_obli_urls['verification_video']) ? $data_obli_urls['verification_video']: null,
                 );
             }else{
                 $data = array(
-                    'verification_image_one' => $data_obli_urls[0],
-                    'verification_image_two' => $data_obli_urls[1],
-                    'verification_image_three' => $data_obli_urls[2],
+                    'verification_image_one' => isset($data_obli_urls['verification_image_1']) ? $data_obli_urls['verification_image_1']: null,
+                    'verification_image_two' => isset($data_obli_urls['verification_image_2']) ? $data_obli_urls['verification_image_2']: null,
+                    'verification_image_three' => isset($data_obli_urls['verification_image_3']) ? $data_obli_urls['verification_image_3']: null,
                     'verification_image_four' => '',
-                    'verification_video' => $data_obli_urls[3],
+                    'verification_video' => isset($data_obli_urls['verification_video']) ? $data_obli_urls['verification_video']: null,
                 );
             }
             $where = array('id' => $val->ID);
@@ -229,70 +231,80 @@ class FullyVerified extends CI_Controller {
         if(isset($data['customer_case_id']) && $data['customer_case_id']!=null){
             $status = $data["status"];
             $id = str_replace('customer_', '', $data['customer_case_id']);
-            $verified = 0;
-            if($status == 'verified-status'){
-                $verified = 1;
-            }
-            $data = array(
+            $data_update = array(
                 'status' => $status,
-                'verified' => $verified,
                 'case_id' => $data["case_id"]
             );
+            if($status == 'verified-status' || $status == 'media-remote-ready'){
+                $data_update['verified'] = 1;
+                $ch = array("id" => $id );
+                $rec = $this->project_model->get_data_where_condition('verified_persons', $ch);
+                if((isset($rec[0]->verified) && $rec[0]->verified == 0) || $status == 'media-remote-ready'){
+                    $this->get_data_package($rec[0]->verification_hash);
+                }
+            }
+            if(isset($data['data'])){
+                $data_update['data_hash'] = $data['data'];
+            }
+
             $where = array('id' => $id);
-            $edit = $this->project_model->update_data('verified_persons', $data, $where);
+            $edit = $this->project_model->update_data('verified_persons', $data_update, $where);
         }
         echo json_encode(1);
     }
 
-    private function get_data_package(){
+    //  run for cron php /home/oblico/public_html/index.php FullyVerified get_ready_data
+    public function get_ready_data(){
         $sql = "SELECT * FROM verified_persons WHERE status = 'media-remote-ready'";
         $result = $this->project_model->get_query_result($sql);
         foreach ($result as $val){
-            $token = $this->get_jwt_token();
-            $url = $this->config->item('fully_verified_url').'/customers/api/verify/';
-            $signature = $this->calculate_signature($this->config->item('fully_verification_secret_key'), 'customer_3', $url );
-            $headers = array(
-                "Authorization: Bearer {$token}",
-            );
-            $data = http_build_query(array(
-                'email' => $this->config->item('fully_customer_email'),
-                'password' => $this->config->item('fully_customer_password'),
-                'verification_hash' => $val->verification_hash,
-                'customer_secret' => $this->config->item('fully_customer_secret_key')
-            ));
-
-            $curl = curl_init();
-
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => $this->config->item('fully_verified_url').'/customers/api/verification-data-package/',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 5000,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => $data,
-                CURLOPT_HTTPHEADER => $headers,
-            ));
-
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
-            curl_close($curl);
-            var_dump($response);
-            var_dump($err);
-            if($err){
-                // todo check with Idan
-
-                return false;
-            }else{
-
-                $data = json_decode($response);
-                return $data;
-            }
+            $this->get_data_package($val->verification_hash, true);
+            sleep(8);
         }
-        return true;
+        echo 1;
+    }
+    private function get_data_package($hash, $header=false){
+        $data = http_build_query(array(
+            'email' => $this->config->item('fully_customer_email'),
+            'password' => $this->config->item('fully_customer_password'),
+            'verification_hash' => $hash,
+            'customer_secret' => $this->config->item('fully_customer_secret_key')
+        ));
+        if($header){
+            $token = $this->get_jwt_token();
+            $headers = array(
+                "Authorization: Bearer {$token}"
+            );
+        }
+
+
+        $curl = curl_init();
+
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->config->item('fully_verified_url').'/customers/api/verification-data-package/',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 5000,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $data,
+        ));
+        if($header){
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        }
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+        if($err){
+            // todo check with Idan
+            return false;
+        }else{
+            $data = json_decode($response);
+            return $data;
+        }
     }
 
     private function save_request($data, $file_name){
@@ -391,21 +403,8 @@ class FullyVerified extends CI_Controller {
     }
 
     public function kyc_redirect(){
-        $sql3 = "SELECT * FROM menu_section where status = 1";
-        $data['menu_details'] = $this->project_model->get_query_result($sql3);
-        $sql4 = "SELECT * FROM icons_section where status = 1";
-        $data['icons_details'] = $this->project_model->get_query_result($sql4);
-
-        $sql5 = "SELECT * FROM application_url_section ORDER BY id DESC LIMIT 1";
-        $data['application_url_details'] = $this->project_model->get_query_result($sql5);
-
-        $sql6 = "SELECT * FROM banner INNER JOIN logo_image ON banner.id = logo_image.banner_id ORDER BY banner.id ";
-        $data['logo_details'] = $this->project_model->get_query_result($sql6);
         $user_data = $this->session->userdata();
         $data_kyc['verified_id'] = $user_data['verified_id_redirect'];
-
-        $this->load->view('website/header');
         $this->load->view('kyc/redirect', $data_kyc);
-        $this->load->view('website/footer', $data);
     }
 }
