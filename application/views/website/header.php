@@ -46,28 +46,18 @@
 				  <a class="navbar-brand leftnavbar" href="<?php echo site_url('website'); ?>"><img src="<?php echo base_url() ?>website_assets/img/logo.png" class="img-responsive"/></a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
-				    
-				    <?php if($this->uri->segment(2) != 'userdashboard'){ ?>
-					<ul class="nav navbar-nav navbar-center lstcenternaviation" style='float:left !important;'>
-					    <li style='left:0px !important;'><a href="<?php echo site_url('login'); ?>" <?php if (base_url(uri_string()) == site_url('login') || base_url(uri_string()) == site_url('login/varify')) { echo 'class=active'; } ?>> אזור אישי </a>
-					    </li>
-					   
-					</ul>
-				  <?php } ?>
-				  
 					<ul class="nav navbar-nav navbar-center lstcenternaviation">
 					    <?php if($this->uri->segment(1) != 'website'){?>
-						<li><a href="<?php echo site_url('website'); ?>" <?php if (base_url(uri_string()) == site_url('website')) { echo 'class=active'; } ?>> עמוד הבית </a>
-						</li>
+						<li><a href="<?php echo site_url('website'); ?>" <?php if (base_url(uri_string()) == site_url('website')) { echo 'class=active'; } ?>> עמוד הבית  </a></li
 						<?php } ?>
 						<li><a href="<?php echo site_url('private1'); ?>" <?php if (base_url(uri_string()) == site_url('private1')) { echo 'class=active'; } ?>>פרטי</a></li>
 						<!-- <li><a href="<?php echo site_url('aboutus'); ?>">אודות   </a></li> -->
 						<li><a href="<?php echo site_url('business1'); ?>" <?php if (base_url(uri_string()) == site_url('business1')) { echo 'class=active'; } ?>>עסקי</a></li>
 						<li><a href="<?php echo site_url('faq'); ?>" <?php if (base_url(uri_string()) == site_url('faq')) { echo 'class=active'; } ?>>שאלות ותשובות </a></li>
 						<li><a href="<?php echo site_url('contactus'); ?>" <?php if (base_url(uri_string()) == site_url('contactus')) { echo 'class=active'; } ?>>צור קשר   </a></li>
-					    
-					</ul>
 					
+					    <li><a href="<?php echo site_url('login'); ?>" <?php if (base_url(uri_string()) == site_url('login')) { echo 'class=active'; } ?>> User Dashboard </a></li
+					</ul>
 					<ul class="nav navbar-nav navbar-right navigation-right logo">
 						<a class="navbar-brand" href="<?php echo site_url('website'); ?>"><img src="<?php echo base_url() ?>website_assets/img/logo.png" class="img-responsive"/></a>
 					</ul>

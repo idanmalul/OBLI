@@ -509,7 +509,7 @@ class PrivateFlow extends CI_Controller {
             $this->session->set_userdata($newdata);
 //            echo 'hello';
 //            print_r($this->session->userdata()); die();
-            redirect('private6');
+            redirect('private7');
         }else{
             // footer records
             $sql3 = "SELECT * FROM menu_section where status = 1";
@@ -1798,7 +1798,7 @@ class PrivateFlow extends CI_Controller {
             //close connection
             curl_close($ch);
             
-           // print_r($result); print_r($err); die();
+//            print_r($result); print_r($err); die();
             
 //            if($_SERVER['REMOTE_ADDR'] == '182.70.229.154')
 //            {
@@ -1838,11 +1838,11 @@ class PrivateFlow extends CI_Controller {
                          }else{
                              
                              $this->session->set_userdata($newdata);
-//                           todo we need "private2" data for KYC process don't remove it from session
+                             
                            $session_array = array('private1', 'private3', 'private4', 'private5', 'private6', 'private7');
                             $this->session->unset_userdata($session_array);
 
-                            echo "<script type='text/javascript'>alert('Your record successfully saved!');window.location.href = '".site_url('kyc')."';</script>";
+                            echo "<script type='text/javascript'>alert('Your record successfully saved!');window.location.href = '".site_url('private8')."';</script>";
                             return FALSE;
                          }
                          

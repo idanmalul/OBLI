@@ -175,5 +175,3 @@ $route['company'] = 'admin/company_list';
 $route['kyc'] = 'FullyVerified/kyc';
 $route['verification-data'] = 'FullyVerified/get_verification_data';
 $route['verification-status'] = 'FullyVerified/set_verification_status';
-$route['check-verified-status'] = 'FullyVerified/check_verified_status';
-$route['kyc-redirect'] = 'FullyVerified/kyc_redirect';

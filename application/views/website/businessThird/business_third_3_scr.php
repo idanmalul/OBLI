@@ -527,7 +527,7 @@ $businessThird2 = $this->session->userdata('businessThird2');
          <div class="gf_browser_chrome gform_wrapper gform_wrapper_application" id="gform_wrapper_5">
             
 
-            <form method="post" enctype="multipart/form-data" id="myform" name="validate_form" novalidate action='<?php echo site_url("businessThird3");?>' >
+            <form method="post" enctype="multipart/form-data" id="myform" name="validate_form" novalidate >
 
             <!-- message modal -->
             <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1374,9 +1374,9 @@ function payment_api(){
 //                            alert(2);
                             
                             if($("#value_check").val() == 1){
-                                $('#myform').submit();
+                                location.href = "<?php echo site_url('businessThird4'); ?>";
                             }if($("#value_check").val() == 2){
-                                $('#myform').submit();
+                                location.href = "<?php echo site_url('businessThird5'); ?>";
                             }
                                 
                         }
@@ -1418,9 +1418,9 @@ function without_payment_api(){
                     $(".sonar-wrapper").hide('fast');
                     $("#sonar_text").hide('fast');
                     if($("#value_check").val() == 1){
-                        $('#myform').submit();
+                        location.href = "<?php echo site_url('businessThird4'); ?>";
                     }if($("#value_check").val() == 2){
-                        $('#myform').submit();
+                        location.href = "<?php echo site_url('businessThird5'); ?>";
                     }
                     
                     return false;
