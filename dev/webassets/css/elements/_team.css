@@ -1,0 +1,15 @@
+/**
+ * Team Member
+ */
+.in-member-social {
+  padding-left: 0;
+  margin-bottom: 0; }
+  .in-member-social li {
+    display: inline-block; }
+    .in-member-social li a {
+      display: inline-block;
+      font-size: 16px;
+      height: 40px;
+      width: 40px;
+      line-height: 40px;
+      border-radius: 100px; }

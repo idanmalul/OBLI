@@ -1,0 +1,45 @@
+/**
+ * About Styles
+ */
+
+
+.about {
+    &-content {
+        padding: 75px 50px;
+        box-shadow: 0 0 10px rgba($theme-color, 0.2);
+
+        h6 {
+            color: $theme-color;
+            margin-bottom: 0;
+            font-weight: 700;
+        }
+
+        h4 {
+            color: $theme-color;
+        }
+
+        ul {
+            margin-top: 35px;
+
+            li:not(:last-child) {
+                margin-bottom: 15px;
+            }
+        }
+
+        .in-button {
+            margin-top: 35px;
+        }
+    }
+
+    @media #{$sm-layout}{
+        &-content{
+            padding: 40px 30px;
+            ul{
+                margin-top: 25px;
+            }
+            .in-button{
+                margin-top: 25px;
+            }
+        }    
+    }
+}

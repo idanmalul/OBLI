@@ -1,0 +1,186 @@
+/**
+ * Header
+ */
+
+.header {
+    &-toparea {
+        background: $secondary-color;
+        padding: 15px 0;
+    }
+
+    &-topcontact,
+    &-toplinks {
+        padding-left: 0;
+        margin-bottom: 0;
+        font-size: 0;
+        line-height: 1;
+        padding: 5px 0;
+
+        li {
+            font-size: 14px;
+            line-height: 1;
+            list-style: none;
+            display: inline-block;
+            color: #ffffff;
+            border-right: 1px solid #fff;
+            padding: 0 15px;
+            letter-spacing: 1px;
+
+            &:first-child {
+                padding-left: 0;
+            }
+
+            &:last-child {
+                border-right: none;
+                padding-right: 0;
+            }
+
+            a {
+                color: #ffffff;
+
+                &:hover {
+                    color: $theme-color;
+                }
+            }
+        }
+    }
+
+    &-toplinks {
+        text-align: right;
+    }
+
+    &-topcontact {
+        li {
+
+            i {
+                margin-right: 7px;
+            }
+        }
+    }
+
+    &-bottomarea {
+        background: #ffffff;
+    }
+
+    &-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &-logo {
+        display: inline-block;
+        padding: 15px 0;
+    }
+
+    &-search {
+        position: relative;
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+    }
+
+    &-searchtrigger {
+        border: none;
+        font-size: 24px;
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+        color: $heading-color;
+        min-width: 34px;
+
+        &:hover,
+        &.is-active {
+            color: $theme-color;
+        }
+    }
+
+    &-searchbox {
+        position: absolute;
+        right: 0;
+        top: 100%;
+        width: 300px;
+        height: auto;
+        background: $bg-grey;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        z-index: 3;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.4s ease-in-out 0s;
+        transform: scale(0.8);
+        transform-origin: 50% 0;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+
+        input {
+            border: 1px solid #bbbbbb;
+            border-right-color: $theme-color;
+
+            &:focus {
+                border-color: $theme-color;
+            }
+        }
+
+        button,
+        [type="submit"] {
+            background: $theme-color;
+            border: 1px solid $theme-color;
+            color: #ffffff;
+            flex: 0 0 45px;
+            max-width: 45px;
+            font-size: 22px;
+
+            &:hover {
+                background: $theme-color;
+            }
+        }
+
+        &.is-visible {
+            visibility: visible;
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @media #{$md-layout} {
+
+        &-topcontact,
+        &-toplinks {
+            text-align: center;
+        }
+    }
+
+    @media #{$sm-layout} {
+
+        &-topcontact,
+        &-toplinks {
+            text-align: center;
+            padding: 0;
+            @media #{$sm-layout}{
+                margin-top: 5px;
+            }
+            li {
+                border-right: none;
+                line-height: 1.5;
+
+                &:first-child {
+                    padding-left: 15px;
+                    @media #{$sm-layout}{
+                        margin-bottom: 5px;
+                    }
+                }
+
+                &:last-child {
+                    padding-right: 15px;
+                }
+            }
+        }
+    }
+
+    @media #{$xs-layout} {
+        &-searchbox {
+            width: 290px;
+        }
+    }
+}

@@ -1,0 +1,39 @@
+/**
+ * Videobox
+ */
+
+.in-videobox {
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        height: calc(100% - 20px);
+        width: calc(100% - 20px);
+        background: rgba($secondary-color, 0.75);
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .in-videobox-button {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    &.in-videobox-2 {
+        &::before {
+            border-radius: 10px;
+            left: 20px;
+            top: 20px;
+            height: calc(100% - 40px);
+            width: calc(100% - 40px);
+        }
+    }
+
+}

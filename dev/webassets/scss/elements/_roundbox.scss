@@ -1,0 +1,152 @@
+/**
+ * Roundbox
+ */
+
+.roundbox {
+    position: relative;
+    height: 320px;
+    width: 320px;
+
+    &:before {
+        content: "";
+        background: url(../images/icons/roundbox-bg.png) no-repeat scroll center center;
+        background-size: cover;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        transform-origin: center center;
+        animation: crCycling 5s linear 0s infinite both;
+    }
+
+    &-block {
+        text-align: center;
+        display: inline-block;
+        position: absolute;
+
+        &:nth-child(1) {
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -32%);
+        }
+
+        &:nth-child(2) {
+            left: 0;
+            top: 50%;
+            transform: translate(-45%, -40%);
+        }
+
+        &:nth-child(3) {
+            left: auto;
+            right: 0;
+            top: 50%;
+            transform: translate(55%, -40%);
+        }
+
+        &:nth-child(4) {
+            top: auto;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 50%);
+        }
+
+        h5 {
+            color: #ffffff;
+            margin-bottom: 0;
+            font-weight: 400;
+            font-size: 20px;
+        }
+    }
+
+    &-icon {
+        height: 80px;
+        width: 80px;
+        text-align: center;
+        line-height: 80px;
+        background: $secondary-color;
+        border-radius: 100px;
+        display: inline-block;
+        color: #ffffff;
+        font-size: 34px;
+    }
+
+    @media only screen and (max-width: 1400px){
+        height: 225px;
+        width: 225px;
+
+        &-block {
+            h5 {
+                font-size: 15px;
+            }
+        }
+    }
+
+    @media #{$lg-layout} {
+        height: 225px;
+        width: 225px;
+
+        &-block {
+            h5 {
+                font-size: 15px;
+            }
+        }
+    }
+
+    @media #{$md-layout} {
+        height: auto;
+        width: auto;
+
+        &-block {
+            position: relative;
+            transform: translate(0) !important;
+            left: inherit !important;
+            top: inherit !important;
+            margin-top: 30px;
+
+            &:not(:last-child){
+                margin-right: 30px;
+            }
+
+            h5 {
+                margin-top: 15px;
+                font-size: 15px;
+            }
+        }
+    }
+
+    @media #{$sm-layout} {
+        height: auto;
+        width: auto;
+
+        &-block {
+            position: relative;
+            transform: translate(0) !important;
+            left: inherit !important;
+            top: inherit !important;
+            margin-top: 20px;
+            min-width: 120px;
+
+            &:not(:last-child){
+                margin-right: 30px;
+            }
+
+            h5 {
+                margin-top: 15px;
+                font-size: 15px;
+            }
+        }
+    }
+
+    @media #{$xs-layout}{
+        &-block:not(:last-child){
+            margin-right: 15px;
+        }
+        &-icon{
+            height: 65px;
+            width: 65px;
+            line-height: 65px;
+            font-size: 26px;
+        }
+    }
+}

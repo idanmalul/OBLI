@@ -1,0 +1,12 @@
+/**
+ * Widget Styles
+ */
+.widget-latestblog {
+  padding-left: 115px;
+  position: relative; }
+  .widget-latestblog-image {
+    position: absolute;
+    left: 0;
+    top: 0; }
+  .widget-latestblog h5 a {
+    color: #ffffff; }

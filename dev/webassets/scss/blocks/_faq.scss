@@ -1,0 +1,61 @@
+/**
+* FAQ Css
+**/
+.question-content-wrap {
+    margin-top: 30px;
+}
+.faequently-accordion {
+    & h4 {
+        font-size: 16px;
+        fon-weight: 600;
+        padding: 22px 55px 22px 30px;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1px;
+        position: relative;
+        @media #{$sm-layout}{
+            padding: 15px 55px 15px 15px;
+        }
+        & a {
+            display: block;
+            width: 100%;
+            color: #666;
+            &::before {
+                color: #222;
+                content: "\f2f9";
+                font-size: 23.2px;
+                font-family: Material-Design-Iconic-Font;
+                right: 0;
+                position: absolute;
+                text-align: center;
+                top: 0;
+                z-index: 9;
+                width: 50px;
+                height: 100%;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.06);
+                line-height: 62px;
+            }
+        }
+        &.open {
+            display: block;
+            & a {
+                display: block;
+                &::before {
+                    content: "\f2fc";
+                    background: #03a8f3;
+                    color: #fff;
+                }
+            } 
+        }
+    }
+    .faequently-description {
+        & p {
+            font-size: 16px;
+            padding: 30px 50px;
+            margin-bottom: 0;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.06);
+            @media #{$sm-layout}{
+               padding: 15px;
+            }
+        }
+    }
+}

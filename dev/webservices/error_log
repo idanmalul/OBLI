@@ -1,0 +1,82 @@
+[19-Apr-2018 11:39:30 Etc/GMT] PHP Warning:  json_decode() expects parameter 1 to be string, array given in /home/amettu2c/public_html/aptech/webservices/fetch_data_by_sap_id.php on line 2
+[19-Apr-2018 11:40:06 Etc/GMT] PHP Warning:  json_decode() expects parameter 1 to be string, array given in /home/amettu2c/public_html/aptech/webservices/fetch_data_by_sap_id.php on line 2
+[01-May-2019 13:42:21 Etc/GMT] PHP Notice:  Array to string conversion in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 25
+[01-May-2019 13:42:56 Etc/GMT] PHP Notice:  Array to string conversion in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 25
+[24-May-2019 06:51:51 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 22
+[24-May-2019 06:51:51 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 23
+[24-May-2019 06:52:32 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 22
+[24-May-2019 06:52:32 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 23
+[24-May-2019 07:00:16 Etc/GMT] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 9
+[24-May-2019 07:01:38 Etc/GMT] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 11
+[24-May-2019 07:02:20 Etc/GMT] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 11
+[24-May-2019 07:30:40 Etc/GMT] PHP Notice:  Undefined index: img in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 3
+[24-May-2019 07:30:40 Etc/GMT] PHP Warning:  file_put_contents(images/5ce79da07c961.png): failed to open stream: No such file or directory in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 8
+[24-May-2019 07:31:33 Etc/GMT] PHP Notice:  Undefined index: img in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 3
+[24-May-2019 07:45:23 Etc/GMT] PHP Notice:  Undefined index: img in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 3
+[24-May-2019 07:46:35 Etc/GMT] PHP Notice:  Undefined index: img in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 3
+[24-May-2019 08:26:09 Etc/GMT] PHP Notice:  Constant UPLOAD_DIR already defined in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 12
+[24-May-2019 08:26:09 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 15
+[24-May-2019 08:26:09 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 16
+[24-May-2019 08:26:38 Etc/GMT] PHP Notice:  Constant UPLOAD_DIR already defined in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 12
+[24-May-2019 08:26:38 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 15
+[24-May-2019 08:26:38 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 16
+[24-May-2019 08:32:02 Etc/GMT] PHP Notice:  Undefined variable: img in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 19
+[24-May-2019 08:32:02 Etc/GMT] PHP Notice:  Use of undefined constant UPLOAD_DIR - assumed 'UPLOAD_DIR' in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 23
+[24-May-2019 10:47:34 Etc/GMT] PHP Notice:  Undefined variable: img in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 20
+[09-Jul-2019 07:06:49 Etc/GMT] PHP Warning:  file_put_contents(https://amettechnologies.com/obli_admin/webservices/obli_profile_images/5d243d09e6ad3.jpeg): failed to open stream: HTTP wrapper does not support writeable connections in /home/amettu2c/public_html/obli_admin/webservices/upload_images.php on line 62
+[13-Jul-2019 10:57:50 Etc/GMT] PHP Fatal error:  Uncaught exception 'Mpdf\MpdfException' with message 'Unable to set PDF file protection, CSPRNG Functions are not available. Use paragonie/random_compat polyfill or upgrade to PHP 7.' in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php:11
+Stack trace:
+#0 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/ServiceFactory.php(68): Mpdf\Pdf\Protection\UniqidGenerator->__construct()
+#1 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Mpdf.php(1034): Mpdf\ServiceFactory->getServices(Object(Mpdf\Mpdf), Object(Psr\Log\NullLogger), Array, 0, Object(Mpdf\Language\LanguageToFont), Object(Mpdf\Language\ScriptToLanguage), NULL, NULL, NULL, NULL)
+#2 /home/amettu2c/public_html/obli_admin/webservices/pdf.php(6): Mpdf\Mpdf->__construct()
+#3 {main}
+  thrown in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php on line 11
+[13-Jul-2019 10:58:55 Etc/GMT] PHP Fatal error:  Uncaught exception 'Mpdf\MpdfException' with message 'Unable to set PDF file protection, CSPRNG Functions are not available. Use paragonie/random_compat polyfill or upgrade to PHP 7.' in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php:11
+Stack trace:
+#0 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/ServiceFactory.php(68): Mpdf\Pdf\Protection\UniqidGenerator->__construct()
+#1 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Mpdf.php(1034): Mpdf\ServiceFactory->getServices(Object(Mpdf\Mpdf), Object(Psr\Log\NullLogger), Array, 0, Object(Mpdf\Language\LanguageToFont), Object(Mpdf\Language\ScriptToLanguage), NULL, NULL, NULL, NULL)
+#2 /home/amettu2c/public_html/obli_admin/webservices/pdf.php(6): Mpdf\Mpdf->__construct()
+#3 {main}
+  thrown in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php on line 11
+[13-Jul-2019 11:00:57 Etc/GMT] PHP Fatal error:  Uncaught exception 'Mpdf\MpdfException' with message 'Unable to set PDF file protection, CSPRNG Functions are not available. Use paragonie/random_compat polyfill or upgrade to PHP 7.' in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php:11
+Stack trace:
+#0 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/ServiceFactory.php(68): Mpdf\Pdf\Protection\UniqidGenerator->__construct()
+#1 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Mpdf.php(1034): Mpdf\ServiceFactory->getServices(Object(Mpdf\Mpdf), Object(Psr\Log\NullLogger), Array, 0, Object(Mpdf\Language\LanguageToFont), Object(Mpdf\Language\ScriptToLanguage), NULL, NULL, NULL, NULL)
+#2 /home/amettu2c/public_html/obli_admin/webservices/pdf.php(5): Mpdf\Mpdf->__construct()
+#3 {main}
+  thrown in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php on line 11
+[13-Jul-2019 11:02:09 Etc/GMT] PHP Fatal error:  Uncaught exception 'Mpdf\MpdfException' with message 'Unable to set PDF file protection, CSPRNG Functions are not available. Use paragonie/random_compat polyfill or upgrade to PHP 7.' in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php:11
+Stack trace:
+#0 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/ServiceFactory.php(68): Mpdf\Pdf\Protection\UniqidGenerator->__construct()
+#1 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Mpdf.php(1034): Mpdf\ServiceFactory->getServices(Object(Mpdf\Mpdf), Object(Psr\Log\NullLogger), Array, 0, Object(Mpdf\Language\LanguageToFont), Object(Mpdf\Language\ScriptToLanguage), NULL, NULL, NULL, NULL)
+#2 /home/amettu2c/public_html/obli_admin/webservices/pdf.php(4): Mpdf\Mpdf->__construct()
+#3 {main}
+  thrown in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php on line 11
+[13-Jul-2019 11:02:12 Etc/GMT] PHP Fatal error:  Uncaught exception 'Mpdf\MpdfException' with message 'Unable to set PDF file protection, CSPRNG Functions are not available. Use paragonie/random_compat polyfill or upgrade to PHP 7.' in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php:11
+Stack trace:
+#0 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/ServiceFactory.php(68): Mpdf\Pdf\Protection\UniqidGenerator->__construct()
+#1 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Mpdf.php(1034): Mpdf\ServiceFactory->getServices(Object(Mpdf\Mpdf), Object(Psr\Log\NullLogger), Array, 0, Object(Mpdf\Language\LanguageToFont), Object(Mpdf\Language\ScriptToLanguage), NULL, NULL, NULL, NULL)
+#2 /home/amettu2c/public_html/obli_admin/webservices/pdf.php(4): Mpdf\Mpdf->__construct()
+#3 {main}
+  thrown in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php on line 11
+[13-Jul-2019 11:02:58 Etc/GMT] PHP Fatal error:  Uncaught exception 'Mpdf\MpdfException' with message 'Unable to set PDF file protection, CSPRNG Functions are not available. Use paragonie/random_compat polyfill or upgrade to PHP 7.' in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php:11
+Stack trace:
+#0 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/ServiceFactory.php(68): Mpdf\Pdf\Protection\UniqidGenerator->__construct()
+#1 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Mpdf.php(1034): Mpdf\ServiceFactory->getServices(Object(Mpdf\Mpdf), Object(Psr\Log\NullLogger), Array, 0, Object(Mpdf\Language\LanguageToFont), Object(Mpdf\Language\ScriptToLanguage), NULL, NULL, NULL, NULL)
+#2 /home/amettu2c/public_html/obli_admin/webservices/pdf.php(7): Mpdf\Mpdf->__construct()
+#3 {main}
+  thrown in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php on line 11
+[13-Jul-2019 11:08:53 Etc/GMT] PHP Fatal error:  Uncaught exception 'Mpdf\MpdfException' with message 'Unable to set PDF file protection, CSPRNG Functions are not available. Use paragonie/random_compat polyfill or upgrade to PHP 7.' in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php:11
+Stack trace:
+#0 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/ServiceFactory.php(68): Mpdf\Pdf\Protection\UniqidGenerator->__construct()
+#1 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Mpdf.php(1034): Mpdf\ServiceFactory->getServices(Object(Mpdf\Mpdf), Object(Psr\Log\NullLogger), Array, 0, Object(Mpdf\Language\LanguageToFont), Object(Mpdf\Language\ScriptToLanguage), NULL, NULL, NULL, NULL)
+#2 /home/amettu2c/public_html/obli_admin/webservices/pdf.php(7): Mpdf\Mpdf->__construct()
+#3 {main}
+  thrown in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php on line 11
+[13-Jul-2019 11:54:26 Etc/GMT] PHP Fatal error:  Uncaught exception 'Mpdf\MpdfException' with message 'Unable to set PDF file protection, CSPRNG Functions are not available. Use paragonie/random_compat polyfill or upgrade to PHP 7.' in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php:11
+Stack trace:
+#0 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/ServiceFactory.php(68): Mpdf\Pdf\Protection\UniqidGenerator->__construct()
+#1 /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Mpdf.php(1034): Mpdf\ServiceFactory->getServices(Object(Mpdf\Mpdf), Object(Psr\Log\NullLogger), Array, 0, Object(Mpdf\Language\LanguageToFont), Object(Mpdf\Language\ScriptToLanguage), NULL, NULL, NULL, NULL)
+#2 /home/amettu2c/public_html/obli_admin/webservices/pdf.php(7): Mpdf\Mpdf->__construct()
+#3 {main}
+  thrown in /home/amettu2c/public_html/obli_admin/webservices/vendor/mpdf/mpdf/src/Pdf/Protection/UniqidGenerator.php on line 11

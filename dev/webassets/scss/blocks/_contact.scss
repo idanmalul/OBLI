@@ -1,0 +1,48 @@
+/**
+* Contact Css
+**/
+.contact-form-warp {
+    & .input-box {
+        margin-top: 30px;
+        & input {
+            color: #000;
+            border-color: #ccc;
+        }
+        & textarea {
+            height: 250px;
+            padding: 15px;
+            border-color: #ccc;
+        }
+    }
+}
+
+.contact-submit-btn {
+    margin-top: 50px;
+    & .submit-btn {
+        border: 1px solid $theme-color;
+        border: 1px solid $theme-color;
+        background: $theme-color;
+        color: #fff;
+        font-size: 16px;
+        padding: 20px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        @media #{$sm-layout}{
+            padding: 15px 25px;
+        }
+        &:hover {
+            background: transparent;
+            color: $theme-color;
+        }
+    }
+} 
+#map {
+    height: 520px;
+    border-radius: 5px;
+    @media #{$md-layout}{
+        height: 400px;
+    }
+    @media #{$sm-layout}{
+        height: 300px;
+    }
+}

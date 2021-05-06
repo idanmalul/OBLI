@@ -1,0 +1,102 @@
+
+/**************************************************************
+	
+	STYLESHEET INDEXING
+	|
+	|
+	|___ Basic Styles
+	|	|
+	|	|___ Reset Styles
+	|	|___ Typography
+	|	|___ Animations
+	|	|___ Utilities
+	|
+	|
+	|___Elements Styles
+	|	|___ Button
+	|	|___ Section Title
+    |   |___ Breadcrumb
+	|	|___ Selectbox
+	|	|___ Roundbox
+    |   |___ Features
+	|	|___ Service
+    |   |___ Videobox
+	|	|___ Counterbox
+    |   |___ Insurence Box
+    |   |___ Call To Action
+    |   |___ Blog Item
+    |   |___ Widget Styles
+    |   |___ Working Progress
+    |   |___ Callback
+    |   |___ Team Member
+    |   |___ Slider Elements
+	|
+	|
+	|___Blocks Styles
+	|	|___ Header 
+	|	|___ Navigation 
+	|	|___ Heroslider
+	|	|___ About Styles
+	|	|___ Testimonial
+	|	|___ FAQ Css
+	|	|___ Contact Css
+	|	|___ Footer
+	|
+	|
+	|___ END STYLESHEET INDEXING
+
+***************************************************************/
+
+
+@import 'variables';
+@import 'mixins';
+
+
+/**************************************
+    Basic Styles
+***************************************/
+@import 'basic/reset';
+@import 'basic/typography';
+@import 'basic/animations';
+@import 'basic/utilities';
+
+
+
+/**************************************
+	Elements Styles
+***************************************/
+@import 'elements/button';
+@import 'elements/section-title';
+@import 'elements/breadcrumb';
+@import 'elements/selectbox';
+@import 'elements/roundbox';
+@import 'elements/features';
+@import 'elements/service';
+@import 'elements/videobox';
+@import 'elements/counterbox';
+@import 'elements/insurencebox';
+@import 'elements/cta';
+@import 'elements/blog';
+@import 'elements/widgets';
+@import 'elements/working-progress';
+@import 'elements/callback';
+@import 'elements/team';
+@import 'elements/slider-elements';
+
+/**************************************
+	Blocks Styles
+***************************************/
+@import 'blocks/header';
+@import 'blocks/navigation';
+@import 'blocks/heroslider';
+@import 'blocks/about';
+@import 'blocks/testimonial';
+@import 'blocks/faq';
+@import 'blocks/contact';
+@import 'blocks/footer';
+
+
+
+/*****************************************/
+/*>>>>>>>>>>>>>>>(THE END)<<<<<<<<<<<<<<<*/
+/*****************************************/

@@ -1,0 +1,278 @@
+<?php
+require './db.class.php';
+require_once __DIR__ . '/vendor/autoload.php';
+
+class PdfSignature extends DB {
+    function pdf() {
+
+	if(!empty($_REQUEST['image_file']) && !empty($_REQUEST['name']) && !empty($_REQUEST['email']) && !empty($_REQUEST['id']) && !empty($_REQUEST['document_id']) && !empty($_REQUEST['document_number_id']) && !empty($_REQUEST['address']) && !empty($_REQUEST['amount']) && !empty($_REQUEST['no_of_months']) ) { 
+
+		$client_id = trim($_REQUEST['client_id']);
+
+		$name = trim($_REQUEST['name']);
+        $email = trim($_REQUEST['email']);
+        $id = trim($_REQUEST['id']);
+
+        $document_id = trim($_REQUEST['document_id']);
+        $document_number_id = trim($_REQUEST['document_number_id']);
+        $address = trim($_REQUEST['address']);
+        $date = date("Y-m-d");
+        $amount = trim($_REQUEST['amount']);
+        $no_of_months = trim($_REQUEST['no_of_months']);
+
+	  define('UPLOAD_DIR', 'user_signature/');
+	  $img = $_REQUEST['image_file'];
+	  
+	  $img = str_replace('data:image/png;base64,', '', $img);
+	  $img = str_replace(' ', '+', $img);
+	  $data = base64_decode($img);
+
+
+	  // Find file type in base64 code
+	  function getBytesFromHexString($hexdata)
+	  {
+	    for($count = 0; $count < strlen($hexdata); $count+=2)
+	      $bytes[] = chr(hexdec(substr($hexdata, $count, 2)));
+
+	    return implode($bytes);
+	  }
+
+	  function getImageMimeType($imagedata)
+	  {
+	    $imagemimetypes = array( 
+	      "jpeg" => "FFD8", 
+	      "png" => "89504E470D0A1A0A", 
+	      "gif" => "474946",
+	      "bmp" => "424D", 
+	      "tiff" => "4949",
+	      "tiff" => "4D4D"
+	    );
+
+	    foreach ($imagemimetypes as $mime => $hexbytes)
+	    {
+	      $bytes = getBytesFromHexString($hexbytes);
+	      if (substr($imagedata, 0, strlen($bytes)) == $bytes)
+	        return $mime;
+	    }
+
+	    return NULL;
+	  }
+
+	  $encoded_string = $img;
+	  $imgdata = base64_decode($encoded_string);
+	  $mimetype = getImageMimeType($imgdata);
+	  // echo $imgdata; die();
+
+	  $file = UPLOAD_DIR . uniqid() . '.'.$mimetype;
+	  // echo $file; die();
+	  $success = file_put_contents($file, $data);
+
+	  if($success){
+
+	    $file_path = USER_PROFILE_IMAGES.$file;
+
+	    $mpdf = new \Mpdf\Mpdf();
+		$mpdf->SetDirectionality('rtl');
+		$mpdf->autoLangToFont = true;
+
+		// Define a default Landscape page size/format by name
+		// $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
+		// $mpdf=new Mpdf('c','A4','',''); 
+		$mpdf->SetDisplayMode('fullpage');
+
+		$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8']);
+
+		$html = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+			<HTML>
+			<HEAD>
+				<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+				<TITLE>כתב ערבות</TITLE>
+				<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
+				<META NAME="AUTHOR" CONTENT="Hen Choen">
+				<META NAME="CREATED" CONTENT="20190430;154600000000000">
+				<META NAME="CHANGEDBY" CONTENT="DANIEL">
+				<META NAME="CHANGED" CONTENT="20190618;71200000000000">
+				<META NAME="CLASSIFICATION" CONTENT="חן כהן">
+				<META NAME="DESCRIPTION" CONTENT="90856\0\3">
+				<META NAME="KEYWORDS" CONTENT="90856\0\3">
+				<META NAME="AppVersion" CONTENT="16.0000">
+				<META NAME="DocSecurity" CONTENT="0">
+				<META NAME="HyperlinksChanged" CONTENT="false">
+				<META NAME="LinksUpToDate" CONTENT="false">
+				<META NAME="ScaleCrop" CONTENT="false">
+				<META NAME="ShareDoc" CONTENT="false">
+				<STYLE TYPE="text/css">
+				<!--
+					@page { margin-left: 1.25in; margin-right: 1.25in; margin-top: 0.49in; margin-bottom: 1in }
+					P { margin-bottom: 0.08in; direction: RTL; line-height: 0.25in; text-align: justify; widows: 2; orphans: 2 }
+					P.western { font-family: "Times New Roman", serif; font-size: 12pt }
+					P.cjk { font-family: "Times New Roman"; font-size: 12pt; so-language: he-IL }
+					P.ctl { font-family: "David"; font-size: 12pt }
+				-->
+				</STYLE>
+			</HEAD>
+			<BODY LANG="en-US" DIR="RTL">
+			<DIV TYPE=HEADER>
+				<P DIR="RTL" ALIGN=CENTER STYLE="margin-bottom: 0.47in; line-height: 100%">
+				<FONT FACE="David"><SPAN LANG="he-IL">לוגו ופרטים של
+				גולדן רוד</SPAN></FONT></P>
+			</DIV>
+			<P DIR="LTR" CLASS="western" ALIGN=CENTER><FONT FACE="David"><SPAN LANG="he-IL"><U><FONT SIZE=4><B>כתב
+			ערבות</B></FONT></U></SPAN></FONT></P>
+			<P DIR="RTL" CLASS="western"><A NAME="_GoBack"></A><BR><BR>
+			</P>
+			<P DIR="RTL" CLASS="western" STYLE="margin-left: 0.02in; margin-bottom: 0in; line-height: 100%">
+			<FONT FACE="David"><SPAN LANG="he-IL">לכבוד</SPAN></FONT>:</P>
+			<P DIR="RTL" CLASS="western" STYLE="margin-left: 0.02in; margin-bottom: 0in; line-height: 100%">
+			<FONT FACE="David"><SPAN LANG="he-IL"><B>שם המשכיר</B><U> </U></SPAN></FONT>
+			</P>
+			<P DIR="RTL" CLASS="western" STYLE="margin-left: 0.02in; margin-bottom: 0in; line-height: 100%">
+			<FONT FACE="David"><SPAN LANG="he-IL"><U>כתובת מלאה של
+			המשכיר</U></SPAN></FONT></P>
+			<P DIR="RTL" CLASS="western" STYLE="margin-left: 0.02in;float:left;"><FONT FACE="David"><SPAN LANG="he-IL">א</SPAN></FONT>.<FONT FACE="David"><SPAN LANG="he-IL">ג</SPAN></FONT>.<FONT FACE="David"><SPAN LANG="he-IL">נ</SPAN></FONT>.,<FONT FACE="David" ><SPAN LANG="he-IL" STYLE="" >תאריך</SPAN></FONT>:
+			'.$date.'</P>
+			<P DIR="RTL" CLASS="western" ALIGN=CENTER STYLE="margin-left: 0.02in">
+			<FONT FACE="David"><SPAN LANG="he-IL"><B>הנדון</B></SPAN></FONT><B>:
+			</B><FONT FACE="David"><SPAN LANG="he-IL"><U><B>ערבות מס</B></U></SPAN></FONT><U><B> '.$document_id.'</B></U></P>
+			<OL>
+				<LI><P DIR="RTL"><FONT FACE="David"><SPAN LANG="he-IL">אנו ערבים
+				בזה כלפיך</SPAN></FONT>/<FONT FACE="David"><SPAN LANG="he-IL">ם
+				לתשלום כל סכום עד לסכום כולל של </SPAN></FONT><U>'.$amount.'</U><B>
+				₪ </B>(<FONT FACE="David"><SPAN LANG="he-IL">להלן</SPAN></FONT>:
+				&quot;<FONT FACE="David"><SPAN LANG="he-IL"><B>סכום הערבות</B></SPAN></FONT>&quot;)
+				<FONT FACE="David"><SPAN LANG="he-IL">שתדרוש</SPAN></FONT>/<FONT FACE="David"><SPAN LANG="he-IL">תדרשו
+				מ</SPAN></FONT>- <U>'.$name.'</U> (<FONT FACE="David"><SPAN LANG="he-IL">להלן
+				וביחד</SPAN></FONT>: <B>&quot;</B><FONT FACE="David"><SPAN LANG="he-IL"><B>הנערב</B></SPAN></FONT><B>&quot;</B>)
+				<FONT FACE="David"><SPAN LANG="he-IL">בקשר עם ההסכם מיום
+				</SPAN></FONT> <U>'.$address.'</U>, <FONT FACE="David"><SPAN LANG="he-IL">על כל
+				תוספותיו</SPAN></FONT>, <FONT FACE="David"><SPAN LANG="he-IL">ככל
+				שיהיו מעת לעת </SPAN></FONT>(<FONT FACE="David"><SPAN LANG="he-IL">להלן</SPAN></FONT>:
+				<B>&quot;</B><FONT FACE="David"><SPAN LANG="he-IL"><B>ההסכם</B></SPAN></FONT><B>&quot;</B>).</P>
+				<LI><P DIR="RTL"><FONT FACE="David"><SPAN LANG="he-IL">סכום
+				הערבות יהיה צמוד למדד המחירים לצרכן
+				כפי שהוא מתפרסם מפעם לפעם על ידי הלשכה
+				המרכזית לסטטיסטיקה ולמחקר כלכלי</SPAN></FONT>,
+				<FONT FACE="David"><SPAN LANG="he-IL">בתנאי ההצמדה שלהלן</SPAN></FONT>:</P>
+				<P DIR="RTL" STYLE="margin-left: 0.35in">&quot;<FONT FACE="David"><SPAN LANG="he-IL"><B>המדד
+			היסודי</B></SPAN></FONT>&quot; <FONT FACE="David"><SPAN LANG="he-IL">לעניין
+			ערבות זו</SPAN></FONT>, <FONT FACE="David"><SPAN LANG="he-IL">יהא
+			המדד שפורסם ביום </SPAN></FONT><U>'.$document_number_id.'</U> <FONT FACE="David"><SPAN LANG="he-IL">בגין
+			חודש </SPAN></FONT><U>'.$no_of_months.'</U>.</P>
+				<P DIR="RTL" STYLE="margin-left: 0.35in">&quot;<FONT FACE="David"><SPAN LANG="he-IL"><B>המדד
+			החדש</B></SPAN></FONT>&quot; <FONT FACE="David"><SPAN LANG="he-IL">לעניין
+			ערבות זו</SPAN></FONT>, <FONT FACE="David"><SPAN LANG="he-IL">יהא
+			המדד שפורסם לאחרונה וקודם לקבלת דרישתכם
+			על פי ערבות זו</SPAN></FONT>.</P>
+			<P DIR="RTL" STYLE="margin-left: 0.35in"><FONT FACE="David"><SPAN LANG="he-IL">הפרשי
+			ההצמדה לעניין ערבות זו יחושבו כדלהלן</SPAN></FONT>:
+			<FONT FACE="David"><SPAN LANG="he-IL">אם יתברר כי המדד
+			החדש עלה לעומת המדד היסודי</SPAN></FONT>, <FONT FACE="David"><SPAN LANG="he-IL">יהיו
+			הפרשי ההצמדה </SPAN></FONT>- <FONT FACE="David"><SPAN LANG="he-IL">הסכום
+			השווה למכפלת ההפרש בין המדד החדש למדד
+			היסודי בסכום הדרישה</SPAN></FONT>, <FONT FACE="David"><SPAN LANG="he-IL">מחולק
+			במדד היסודי</SPAN></FONT>. <FONT FACE="David"><SPAN LANG="he-IL">אם
+			המדד החדש יהיה נמוך מהמדד היסודי</SPAN></FONT>,
+			<FONT FACE="David"><SPAN LANG="he-IL">נשלם לך</SPAN></FONT>/<FONT FACE="David"><SPAN LANG="he-IL">ם
+			את הסכום הנקוב בדרישתך</SPAN></FONT>/<FONT FACE="David"><SPAN LANG="he-IL">ם
+			עד לסכום הערבות</SPAN></FONT>, <FONT FACE="David"><SPAN LANG="he-IL">ללא
+			כל הפרשי הצמדה</SPAN></FONT>.</P>
+
+			</OL>
+			<OL START=3>
+				<LI><P DIR="RTL"><FONT FACE="David"><SPAN LANG="he-IL">לפי
+				דרישתך</SPAN></FONT>/<FONT FACE="David"><SPAN LANG="he-IL">ם
+				הראשונה בכתב</SPAN></FONT>, <FONT FACE="David"><SPAN LANG="he-IL">ולא
+				יאוחר מארבעה עשר ימים מתאריך התקבל
+				דרישתך</SPAN></FONT>/<FONT FACE="David"><SPAN LANG="he-IL">ם
+				על ידינו </SPAN></FONT>[<FONT FACE="David"><SPAN LANG="he-IL">באמצעות
+				האתר או לפי כתובתנו המפורטת לעיל </SPAN></FONT>(<FONT FACE="David"><SPAN LANG="he-IL">בלוגו
+				של המסמך</SPAN></FONT>)], <FONT FACE="David"><SPAN LANG="he-IL">אנו
+				נשלם לך</SPAN></FONT>/<FONT FACE="David"><SPAN LANG="he-IL">ם
+				כל סכום הנקוב בדרישה ובלבד שלא יעלה על
+				סכום הערבות הצמוד למדד</SPAN></FONT>, <FONT FACE="David"><SPAN LANG="he-IL">מבלי
+				להטיל עליך</SPAN></FONT>/<FONT FACE="David"><SPAN LANG="he-IL">ם
+				חובה להוכיח או לבסס את דרישתך</SPAN></FONT>/<FONT FACE="David"><SPAN LANG="he-IL">ם
+				ומבלי שתהיה</SPAN></FONT>/<FONT FACE="David"><SPAN LANG="he-IL">ו
+				חייב</SPAN></FONT>/<FONT FACE="David"><SPAN LANG="he-IL">ים
+				לדרוש את התשלום תחילה מאת הנערב</SPAN></FONT>.
+				[<FONT FACE="David"><SPAN LANG="he-IL"><SPAN STYLE="background: #ffff00">דני</SPAN></SPAN></FONT><SPAN STYLE="background: #ffff00">,
+				<FONT FACE="David"><SPAN LANG="he-IL">ערן – לדיון כיצד
+				מודיעים על מימוש הערבות</SPAN></SPAN></FONT><SPAN STYLE="background: #ffff00">.
+				<FONT FACE="David"><SPAN LANG="he-IL">האם אפשר להסתפק
+				בשליחת מייל</SPAN></SPAN></FONT><SPAN STYLE="background: #ffff00">?
+				<FONT FACE="David"><SPAN LANG="he-IL">החזרה של הערבות</SPAN></SPAN></FONT><SPAN STYLE="background: #ffff00">?</SPAN>]</P>
+				<LI><P DIR="RTL"><FONT FACE="David"><SPAN LANG="he-IL">ערבות זו
+				תישאר בתוקפה עד ליום סיום ההסכם</SPAN></FONT>,
+				<FONT FACE="David"><SPAN LANG="he-IL">ולאחר תאריך זה
+				תהיה בטלה ומבוטלת</SPAN></FONT>. <FONT FACE="David"><SPAN LANG="he-IL">כל
+				דרישה על פי ערבות זו צריכה להתקבל על
+				ידינו בכתב ולא יאוחר מהתאריך הנ</SPAN></FONT>&quot;<FONT FACE="David"><SPAN LANG="he-IL">ל</SPAN></FONT>.
+					</P>
+				<LI><P DIR="RTL"><FONT FACE="David"><SPAN LANG="he-IL">ערבות
+				זאת אינה ניתנת להעברה ו</SPAN></FONT>/<FONT FACE="David"><SPAN LANG="he-IL">או
+				להסבה</SPAN></FONT>.</P>
+				<LI><P DIR="RTL"><FONT FACE="David"><SPAN LANG="he-IL">ערבות זו
+				ניתנת למימוש לשיעורין</SPAN></FONT>.</P>
+			</OL>
+			<P DIR="RTL" ALIGN=LEFT STYLE="margin-left: 3.54in"><FONT FACE="David"><SPAN LANG="he-IL">בכבוד
+			רב</SPAN></FONT>,</P>
+			<P DIR="LTR" CLASS="western" STYLE="margin-left: 3.54in; text-indent: 4.39in">
+			      <FONT FACE="David"><SPAN LANG="he-IL">גולדן</SPAN></FONT>-<FONT FACE="David"><SPAN LANG="he-IL">רוד
+			בע</SPAN></FONT>&quot;<FONT FACE="David"><SPAN LANG="he-IL">מ</SPAN></FONT></P>
+			<P DIR="LTR" CLASS="western"><img src="'.$file_path.'" width="200" height="" STYLE="float:left;">
+			</P>
+			</BODY>
+			</HTML>';
+
+			// set auto page breaks
+			// $mpdf->SetAutoPageBreak(true, 11);
+			$mpdf->AddPage();
+			// $mpdf->SetFont('times', '', 10.5);
+			$mpdf->WriteHTML($html);
+			// $mpdf->Output();
+			$location = __DIR__ .'/user_pdf/';
+			$pdf_file = 'user_pdf'.uniqid().time().'.pdf';
+			$mpdf->Output($location . $pdf_file, \Mpdf\Output\Destination::FILE);
+
+			$final_pdf_path = USER_FINAL_PDF.$pdf_file;
+
+
+			// pdf url update in the user (salesforce)
+			// $where = array('id' => $client_id);
+
+   //          $get_client_rec = $this->get_record_where('client_table__c', $where);
+
+   //          if(!empty($get_client_rec)){
+
+   //              $update_data = array('sign_pdf__c' => $final_pdf_path );
+
+   //              $this->update_records('client_table__c', $update_data, $where);
+
+   //              $response = array('status' => 'true', 'message' => 'Upload successfully!', 'file_path' => $final_pdf_path);
+
+   //          }
+   //          else{
+   //              $response = array('status' => 'false', 'message' => 'User not found!');
+   //          }
+
+            $response = array('status' => 'true', 'message' => 'Upload successfully!', 'file_path' => $final_pdf_path);
+	    
+	  }
+	  else{
+	    $response = array('status' => 'false', 'message' => 'Error in upload file!');
+	  }
+
+
+
+	}
+	else
+	{
+	  $response = array('status' => 'false', 'message' => 'Invalid request parameter');
+	}
+        $this->json_output($response);
+  }
+}
+
+$add = new PdfSignature();
+$add->pdf();
+

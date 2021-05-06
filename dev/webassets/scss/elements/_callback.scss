@@ -1,0 +1,69 @@
+/**
+ * Callback
+ */
+
+.callback-area {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 325px;
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background: #0b2a50;
+        opacity: 0.97;
+        z-index: -1;
+    }
+
+    @media #{$lg-layout}{
+        padding-bottom: 300px;
+    }
+
+    @media #{$md-layout}{
+        padding-bottom: 287px;
+    }
+
+    @media #{$sm-layout}{
+        padding-bottom: 265px;
+    }
+}
+
+.callback {
+    &-content {
+        h4 {
+            color: $theme-color;
+        }
+
+        h2 {
+            color: #ffffff;
+        }
+
+        p {
+            color: #ffffff;
+            font-size: 16px;
+            letter-spacing: 1px;
+            padding-right: 100px;
+        }
+    }
+
+    &-form{
+        input{
+            border-color: #48586c;
+            color: #dddddd;
+            letter-spacing: 1px;
+            @include placeholder-color(#dddddd);
+        }
+    }
+
+    @media #{$sm-layout}{
+        &-content{
+            p{
+                padding-right: 0;
+            }
+        }
+    }
+}

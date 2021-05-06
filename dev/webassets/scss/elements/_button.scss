@@ -1,0 +1,133 @@
+/**
+ * Button
+ */
+
+.in-button,
+.in-button:link,
+.in-button:visited {
+    outline: none;
+    transition: all 0.3s ease-in-out 0s;
+    position: relative;
+    font-size: 16px;
+    line-height: 25px;
+    text-transform: capitalize;
+    font-weight: 700;
+    display: inline-block;
+    border: 1px solid $theme-color;
+    background: transparent;
+    padding: 16px 40px 14px 40px;
+    border-radius: 1000px;
+    color: $theme-color;
+    text-transform: uppercase;
+    border: 1px solid $theme-color;
+
+    &:hover {
+        background: $theme-color;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        color: #ffffff;
+    }
+
+    &.in-button-theme {
+        background: $theme-color;
+        color: #ffffff;
+    }
+
+    &.in-button-colorwhite {
+        color: #ffffff;
+    }
+
+    &.in-button-white{
+        border-color: #ffffff;
+        color: #ffffff;
+
+        &:hover{
+            border-color: $theme-color;
+        }
+    }
+
+    &.in-button-xs{
+        font-size: 14px;
+        padding: 8px 35px 8px 35px;
+    }
+
+    @media #{$md-layout}{
+        padding: 11px 30px 10px 30px;
+    }
+
+    @media #{$sm-layout}{
+        padding: 11px 30px 10px 30px;
+    }
+
+    @media #{$xs-layout}{
+        padding: 9px 25px 8px 25px;
+        font-size: 15px;
+    }
+}
+
+
+/* Video Button */
+.in-videobutton,
+.in-videobutton:link,
+.in-videobutton:visited {
+    width: 75px;
+    height: 75px;
+    display: inline-block;
+    border-radius: 100%;
+    text-align: center;
+    font-size: 42px;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+
+    i {
+        color: #ffffff;
+        position: relative;
+        z-index: 2;
+        height: 75px;
+        width: 75px;
+        border-radius: 100%;
+        background: $theme-color;
+        display: inline-block;
+        vertical-align: middle;
+        padding: 17px 0;
+        padding-left: 3px;
+        transition: all 0.4s ease-in-out 0s;
+    }
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        border-radius: 100%;
+        background: rgba(255, 255, 255, 0.4);
+        z-index: -1;
+        animation: crZoomInOutInvisible 1s ease-in-out infinite backwards;
+    }
+
+    &::after {
+        animation-delay: 0.3s;
+    }
+
+    &:hover {
+        i {
+            color: #ffffff;
+            background: $theme-color;
+        }
+    }
+
+    @media #{$sm-layout}{
+        width: 55px;
+        height: 55px;
+        font-size: 28px;
+    
+        i {
+            height: 55px;
+            width: 55px;
+            padding: 14px 0;
+        }    
+    }
+}

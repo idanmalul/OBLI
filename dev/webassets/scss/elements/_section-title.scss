@@ -1,0 +1,29 @@
+/**
+ * Section Title
+ */
+
+.section-title {
+    margin-bottom: 30px;
+
+    &::after {
+        content: url('../images/icons/title-bottom-shape.png');
+    }
+
+    h6 {
+        color: $body-color;
+        font-family: $body-font;
+        margin-bottom: 5px;
+        margin-top: -5px;
+    }
+
+    h2 {
+        font-weight: 700;
+        font-family: $heading-font;
+        color: $heading-color;
+    }
+
+    @media #{$sm-layout} {
+        margin-bottom: 15px;
+    }
+
+}

@@ -1,0 +1,11 @@
+/**
+ * Breadcrumb
+ */
+.in-breadcrumb ul {
+  padding-left: 0;
+  margin-bottom: 0; }
+  .in-breadcrumb ul li {
+    list-style: none;
+    display: inline-block; }
+    .in-breadcrumb ul li a {
+      display: inline-block; }

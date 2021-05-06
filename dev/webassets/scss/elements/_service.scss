@@ -1,0 +1,235 @@
+/**
+ * Service
+ */
+
+.in-service {
+    background: #ffffff;
+    box-shadow: 0 0 12px rgba(#888888, 0.1);
+    padding: 30px 15px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    transition: all 0.4s ease-in-out 0s;
+
+    &-icon {
+        font-size: 56px;
+        line-height: 1;
+        color: #3489ca;
+        margin-bottom: 20px;
+        display: inline-block;
+        transition: all 0.4s ease-in-out 0s;
+    }
+
+    h5 {
+        font-size: 18px;
+        font-weight: 700;
+
+        a {
+            color: $heading-color;
+            transition: all 0.4s ease-in-out 0s;
+        }
+    }
+
+    p {
+        margin-bottom: 0;
+        font-size: 14px;
+        transition: all 0.4s ease-in-out 0s;
+    }
+
+    &-transparenticon {
+        position: absolute;
+        left: auto;
+        right: -10px;
+        top: auto;
+        bottom: -10px;
+        font-size: 90px;
+        line-height: 1;
+        color: rgba(#ffffff, 0.1);
+        opacity: 0;
+        transition: all 0.4s ease-in-out 0s;
+    }
+
+    &:hover {
+        background: #3489ca;
+    }
+
+    &:hover &-icon,
+    &:hover h5,
+    &:hover h5 a,
+    &:hover p {
+        color: #ffffff;
+    }
+
+    &:hover &-transparenticon {
+        opacity: 1;
+    }
+
+    &:hover h5 a{
+        &:hover{
+            color: $secondary-color;
+        }
+    }
+}
+
+
+/* Service Style 2 */
+.in-service-2 {
+    &-image {
+        position: relative;
+        border-radius: 5px;
+        overflow: hidden;
+
+        a {
+            display: block;
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                background: rgba(#000, 0.7);
+                visibility: hidden;
+                opacity: 0;
+                transition: all 0.4s ease-in-out 0s;
+            }
+        }
+
+        img {
+            width: 100%;
+        }
+    }
+
+    &-icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: #ffffff;
+        font-size: 50px;
+        margin-top: 30px;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.4s ease-in-out 0s;
+    }
+
+    &-content {
+        padding-top: 30px;
+
+        h5 {
+            a {
+                color: $heading-color;
+
+                &:hover {
+                    color: $theme-color;
+                }
+            }
+        }
+
+        .in-button {
+            margin-top: 15px;
+        }
+    }
+
+    &:hover &-image {
+        a {
+            &::before {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+    }
+
+    &:hover &-icon {
+        margin-top: 0;
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+
+
+
+/* Service Details */
+
+.service-details-img {
+    position: relative;
+}
+
+
+.service-blockquote {
+    padding: 20px 30px;
+    margin-bottom: 0;
+    background: $theme-color;
+    color: #fff;
+    font-style: normal;
+    overflow: hidden;
+    font-weight: 600;
+    font-size: 16px;
+    position: relative;
+    
+    & .top-overlay {
+        
+        &::after {
+            background: #0072bc;
+            position: absolute;
+            content: "";
+            left: 0;
+            bottom: -8px;
+            width: 30px;
+            height: 10px;
+            transform: rotate(8deg);
+        }
+        &::before {
+            background: #0072bc;
+            position: absolute;
+            content: "";
+            left: -8px;
+            bottom: 0;
+            width: 10px;
+            height: 30px;
+            transform: rotate(-8deg);
+        }
+    }
+    
+    & .bottom-overlay {
+        &::after {
+            background: #0072bc;
+            position: absolute;
+            content: "";
+            right: -8px;
+            top: -7px;
+            width: 30px;
+            height: 10px;
+            transform: rotate(8deg);
+        }
+        &::before {
+            background: #0072bc;
+            position: absolute;
+            content: "";
+            right: -8px;
+            top: 0;
+            width: 10px;
+            height: 30px;
+            transform: rotate(-8deg);
+        }
+    }
+    
+    
+    & p {
+        margin-bottom: 0;
+    }
+}
+.in-service-3 {
+    & .feature-icon {
+        font-size: 40px;
+        margin-bottom: 20px;
+        display: block;
+    }
+    & p {
+        margin-bottom: 0;
+    }
+}

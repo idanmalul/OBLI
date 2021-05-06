@@ -1,0 +1,83 @@
+.eni_list{
+        border:1px solid #D4D4D4;
+    }
+    .eni_list tr:nth-child(2){
+        font-family:'Cantora One', sans-serif;
+        font-size:14px;
+    }
+    .eni_list td{
+        padding:5px;
+        border:1px solid #D5D5D5;
+        text-align:center;
+    }
+    .eni_list tr:nth-child(even){
+        background:#E4E4E4;
+    }
+    span.err{
+        color:#F00;
+        font-weight:bold;
+    }
+
+table.emi{
+        border:1px solid #d4d4d4;
+        margin:0 auto;
+        font-family:'Cantora One', sans-serif;
+        font-size:14px;
+    }
+    table.emi td{
+        padding:5px;
+    }
+    table.emi tr:nth-child(even){
+        background:#E4E4E4;
+        border:1px solid #D4D4D4;
+        border-left:0;
+        border-right:0;
+    }
+    table.emi tr td:nth-last-child(1){
+        background:#D7E4FF;
+    }
+    table.emi input{
+        margin-bottom:5px !important;
+        margin-top:5px;
+    }
+    #result td{
+        padding:5px;
+    }
+    table#result{
+        width:100%;
+        border:1px solid #d4d4d4;
+        margin:0 auto;
+        margin-top:10px;
+        display:none;
+        font-family:'Cantora One', sans-serif;
+        font-size:14px;
+    }
+    table#result tr:nth-child(even){
+        background:#E4E4E4;
+        border:1px solid #D4D4D4;
+    }
+    table#result tr td:nth-last-child(1){
+        width:213px;
+    }
+
+    .loan_src{
+        font-weight: 700;
+    font-family: "Montserrat", sans-serif;
+    color: #2b2b2b;
+    }
+    .td_center{
+        text-align: center;
+    }
+
+    #errorname{
+        color:#F00;
+        font-weight:bold;
+    }
+    #errormonth{
+        color:#F00;
+        font-weight:bold;
+    }
+    #errorrate{
+        color:#F00;
+        font-weight:bold;
+    }

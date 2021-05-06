@@ -1,0 +1,32 @@
+/**
+ * Insurence Box
+ */
+
+.insurencebox {
+    padding: 75px 50px;
+    box-shadow: 0 0 10px rgba($theme-color, 0.2);
+
+    h4 {
+        color: $theme-color;
+        margin-bottom: 5px;
+    }
+
+    h2 {
+        line-height: 1.2;
+    }
+
+    &-form {
+        select, input, .nice-select{
+            margin-top: 20px;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+        button, input[type="submit"]{
+            margin-top: 50px;
+        }
+    }
+
+    @media #{$sm-layout}{
+        padding: 40px 30px;
+    }
+}
